@@ -2,32 +2,32 @@ const menu = [
   {
     name: "Mie Ayam",
     price: 8000,
-    img: "https://cdn.pixabay.com/photo/2015/05/31/13/55/noodles-791654_1280.jpg"
+    img: "https://allofresh.id/blog/wp-content/uploads/2023/08/cara-membuat-mie-ayam-4-780x470.jpg"
   },
   {
     name: "Bakso",
     price: 10000,
-    img: "https://cdn.pixabay.com/photo/2020/09/04/14/06/meatballs-5543954_1280.jpg"
+    img: "https://i0.wp.com/resepkoki.id/wp-content/uploads/2016/04/Resep-Bakso-urat.jpg?fit=1518%2C1920&ssl=1"
   },
   {
     name: "Es Teh",
     price: 3000,
-    img: "https://cdn.pixabay.com/photo/2017/07/30/12/28/ice-tea-2553154_1280.jpg"
+    img: "https://awsimages.detik.net.id/community/media/visual/2023/10/17/es-teh-manis_169.jpeg?w=1200"
   },
   {
     name: "Es Jeruk",
     price: 4000,
-    img: "https://cdn.pixabay.com/photo/2017/07/16/10/43/orange-2500167_1280.jpg"
+    img: "https://cdn.rri.co.id/berita/Palangkaraya/o/1726808411077-es-jeruk-final2/ixbgg2zoqr1d6m7.jpeg"
   },
   {
     name: "Teh Anget",
     price: 3000,
-    img: "https://cdn.pixabay.com/photo/2016/11/29/03/53/beverage-1869598_1280.jpg"
+    img: "https://awsimages.detik.net.id/community/media/visual/2022/05/22/teh-hangat-3.jpeg?w=724"
   },
   {
     name: "Jeruk Anget",
     price: 4000,
-    img: "https://cdn.pixabay.com/photo/2018/03/04/15/55/orange-3193038_1280.jpg"
+    img: "https://img-global.cpcdn.com/recipes/2a8028fc0e0830d1/680x482cq90/jeruk-peras-hangat-foto-resep-utama.jpg"
   }
 ];
 
