@@ -193,3 +193,35 @@ footer {
 .cart-popup button:hover {
   background: #b22b38;
 }
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .hero {
+    font-size: 1.5em;
+    height: 200px;
+    text-align: center;
+  }
+
+  .section {
+    padding: 30px 15px;
+  }
+
+  .cart-popup {
+    width: 90%;
+    right: 5%;
+    bottom: 10px;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 10px;
+    font-size: 14px;
+  }
+
+  .menu-card button {
+    width: 100%;
+  }
+}
