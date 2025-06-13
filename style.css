@@ -242,3 +242,28 @@ footer {
 .sosmed-icons img:hover {
   transform: scale(1.1);
 }
+
+.kontak-wrapper {
+  text-align: center;
+}
+
+.kontak-wrapper h2 {
+  margin-bottom: 15px;
+}
+
+.sosmed-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.sosmed-icons img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s ease;
+}
+
+.sosmed-icons img:hover {
+  transform: scale(1.1);
+}
