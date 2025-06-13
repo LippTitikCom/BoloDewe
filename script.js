@@ -1,32 +1,32 @@
 const menu = [
   {
     name: "Mie Ayam",
-    price: 8000,
+    price: 8.000,
     img: "https://allofresh.id/blog/wp-content/uploads/2023/08/cara-membuat-mie-ayam-4-780x470.jpg"
   },
   {
     name: "Bakso",
-    price: 10000,
+    price: 10.000,
     img: "https://i0.wp.com/resepkoki.id/wp-content/uploads/2016/04/Resep-Bakso-urat.jpg?fit=1518%2C1920&ssl=1"
   },
   {
     name: "Es Teh",
-    price: 3000,
+    price: 3.000,
     img: "https://awsimages.detik.net.id/community/media/visual/2023/10/17/es-teh-manis_169.jpeg?w=1200"
   },
   {
     name: "Es Jeruk",
-    price: 4000,
+    price: 4.000,
     img: "https://cdn.rri.co.id/berita/Palangkaraya/o/1726808411077-es-jeruk-final2/ixbgg2zoqr1d6m7.jpeg"
   },
   {
     name: "Teh Anget",
-    price: 3000,
+    price: 3.000,
     img: "https://awsimages.detik.net.id/community/media/visual/2022/05/22/teh-hangat-3.jpeg?w=724"
   },
   {
     name: "Jeruk Anget",
-    price: 4000,
+    price: 4.000,
     img: "https://img-global.cpcdn.com/recipes/2a8028fc0e0830d1/680x482cq90/jeruk-peras-hangat-foto-resep-utama.jpg"
   }
 ];
