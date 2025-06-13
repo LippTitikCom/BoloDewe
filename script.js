@@ -82,7 +82,7 @@ function checkout() {
     const item = cart[name];
     message += `- ${name} x${item.qty} = Rp${item.price * item.qty}\n`;
   });
-  const url = `https://wa.me/6281233946203?text=${encodeURIComponent(message)}`;
+  const url = `https://wa.me/6281235825391?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
 }
 
