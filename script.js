@@ -1,7 +1,7 @@
 const menu = [
   {
     name: "Mie Ayam",
-    price: 8000,
+    price: 10000,
     img: "https://allofresh.id/blog/wp-content/uploads/2023/08/cara-membuat-mie-ayam-4-780x470.jpg"
   },
   {
