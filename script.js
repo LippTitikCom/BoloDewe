@@ -1929,3 +1929,102 @@ window.addEventListener('resize', adjustFormHeight);
     });
 });
 
+// Handle form booking scroll dan loading
+document.addEventListener('DOMContentLoaded', function() {
+    // Sembunyikan loading screen setelah halaman siap
+    setTimeout(() => {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+        }
+    }, 1000);
+
+    // Adjust form height berdasarkan viewport
+    function adjustBookingForm() {
+        const bookingForm = document.querySelector('.booking-form');
+        const bookingSummary = document.querySelector('.booking-summary');
+        
+        if (bookingForm && window.innerHeight < 800) {
+            const viewportHeight = window.innerHeight;
+            const formTop = bookingForm.getBoundingClientRect().top;
+            const margin = 20;
+            const maxHeight = viewportHeight - formTop - margin;
+            
+            bookingForm.style.maxHeight = Math.max(400, maxHeight) + 'px';
+        }
+        
+        // Adjust summary position untuk layar kecil
+        if (bookingSummary && window.innerWidth < 992) {
+            bookingSummary.style.position = 'static';
+        }
+    }
+
+    // Panggil saat load dan resize
+    adjustBookingForm();
+    window.addEventListener('resize', adjustBookingForm);
+
+    // Smooth scroll untuk form yang panjang
+    const formSections = document.querySelectorAll('.form-section');
+    formSections.forEach(section => {
+        section.addEventListener('click', function(e) {
+            if (e.target.tagName === 'H3') {
+                this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Validasi form sebelum submit
+    const bookingForm = document.getElementById('bookingForm');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validasi field required
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            // Validasi checkbox
+            const agreeTerms = document.getElementById('agreeTerms');
+            const agreeData = document.getElementById('agreeData');
+            
+            if (!agreeTerms.checked || !agreeData.checked) {
+                isValid = false;
+                alert('Harap menyetujui syarat dan ketentuan serta persetujuan pengolahan data.');
+            }
+            
+            if (isValid) {
+                // Kirim ke WhatsApp
+                sendToWhatsApp();
+            } else {
+                alert('Harap lengkapi semua field yang wajib diisi!');
+            }
+        });
+    }
+
+    function sendToWhatsApp() {
+        const phone = '6281235825391';
+        const service = document.getElementById('serviceType').value;
+        const date = document.getElementById('workDate').value;
+        const duration = document.getElementById('workDuration').value;
+        const name = document.getElementById('fullName').value;
+        
+        const message = `Halo AltheraWork, saya ${name} ingin memesan layanan:\n\n` +
+                       `📋 Layanan: ${service}\n` +
+                       `📅 Tanggal: ${date}\n` +
+                       `⏱️ Durasi: ${duration} hari\n\n` +
+                       `Saya telah mengisi form pemesanan di website.`;
+        
+        const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+    }
+});
+
