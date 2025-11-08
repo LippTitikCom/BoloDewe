@@ -1,5 +1,5 @@
 // WhatsApp Configuration
-const WHATSAPP_NUMBER = '6281235825391'; // Ganti dengan nomor WhatsApp bisnis Anda
+const WHATSAPP_NUMBER = '6281235825391'; // Nomor WhatsApp AltheraWork
 
 // Initialize AOS (Animate On Scroll)
 document.addEventListener('DOMContentLoaded', function() {
@@ -24,6 +24,8 @@ function initializeAllComponents() {
     initializeContactForm();
     initializeBookingForm();
     initializeFileUpload();
+    initializeLoginSystem();
+    checkLoginStatus();
 }
 
 // Loading Screen - FIXED
@@ -166,7 +168,7 @@ function initializeWhatsApp() {
     const floatingWhatsApp = document.getElementById('floatingWhatsApp');
     if (floatingWhatsApp) {
         floatingWhatsApp.addEventListener('click', function() {
-            sendWhatsAppMessage('Halo PowerWork, saya ingin bertanya tentang jasa tenaga harian yang tersedia.');
+            sendWhatsAppMessage('Halo AltheraWork, saya ingin bertanya tentang jasa tenaga harian yang tersedia.');
         });
     }
 }
@@ -826,124 +828,6 @@ function initializeServiceSelection() {
     });
 }
 
-// Initialize service selection when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('PowerWork Website Loaded Successfully');
-
-    // Add subtle animation to all interactive elements
-    const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
-    interactiveElements.forEach(function(el) {
-        el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    });
-
-    // Initialize service selection
-    initializeServiceSelection();
-
-    // ============================================
-// TAMBAHAN UNTUK ALTHERAWORK
-// Tambahkan kode ini di BAWAH kode JavaScript yang sudah ada
-// ============================================
-
-// Update WhatsApp Configuration untuk AltheraWork
-const ALTHERA_WHATSAPP_NUMBER = '628123582539'; // Ganti dengan nomor WhatsApp bisnis Anda
-
-// Update semua referensi PowerWork menjadi AltheraWork
-function updateBrandReferences() {
-    // Update judul halaman
-    if (document.title.includes('AltheraWork')) {
-        document.title = document.title.replace('AltheraWork', 'AltheraWork');
-    }
-    
-    // Update teks di WhatsApp messages
-    const originalSendWhatsAppMessage = window.sendWhatsAppMessage;
-    window.sendWhatsAppMessage = function(message) {
-        message = message.replace(/AltheraWork/g, 'AltheraWork');
-        const whatsappUrl = `https://wa.me/${ALTHERA_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    };
-    
-    // Update fungsi lainnya yang menggunakan PowerWork
-    const originalSendServiceInquiry = window.sendServiceInquiry;
-    if (originalSendServiceInquiry) {
-        window.sendServiceInquiry = function(service, price) {
-            const message = `Halo AltheraWork, saya tertarik dengan layanan ${service} dengan harga ${price}/hari. Bisa info lebih lanjut?`;
-            const whatsappUrl = `https://wa.me/${ALTHERA_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-            showNotification('Membuka WhatsApp... Silakan lanjutkan percakapan dengan tim kami.', 'success');
-        };
-    }
-    
-    // Update contact form message
-    const originalSendContactToWhatsApp = window.sendContactToWhatsApp;
-    if (originalSendContactToWhatsApp) {
-        window.sendContactToWhatsApp = function(name, email, phone, service, message) {
-            const whatsappMessage = `Halo AltheraWork, saya ${name} ingin konsultasi mengenai layanan:
-
-📋 *DATA KONTAK*
-• Nama: ${name}
-• Email: ${email}
-• Telepon: ${phone}
-• Layanan: ${service}
-
-💬 *PESAN*
-${message}
-
-Mohon info lebih lanjut dan penawaran harganya. Terima kasih.`;
-
-            const whatsappUrl = `https://wa.me/${ALTHERA_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappUrl, '_blank');
-            showNotification('Form berhasil dikirim! Membuka WhatsApp...', 'success');
-
-            // Reset form
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.reset();
-            }
-        };
-    }
-    
-    // Update booking form message
-    const originalSendBookingToWhatsApp = window.sendBookingToWhatsApp;
-    if (originalSendBookingToWhatsApp) {
-        window.sendBookingToWhatsApp = function(formData, totalPrice) {
-            const message = `Halo AltheraWork, saya ingin memesan layanan dengan detail berikut:
-
-📋 *DATA PEMESANAN*
-• Nama: ${formData.fullName}
-• Telepon: ${formData.phone}
-${formData.email ? `• Email: ${formData.email}\n` : ''}
-• Jenis Identitas: ${formData.identityType}
-• Nomor Identitas: ${formData.identityNumber}
-• Alamat: ${formData.address}
-
-🛠️ *DETAIL LAYANAN*
-• Layanan: ${formData.serviceType.split(' - ')[0]}
-• Tanggal: ${formatDate(formData.workDate)}
-• Durasi: ${formData.workDuration} Hari
-${formData.workTime ? `• Waktu: ${formData.workTime}\n` : ''}
-• Lokasi: ${formData.workAddress}
-${formData.specialRequest ? `• Permintaan Khusus: ${formData.specialRequest}\n` : ''}
-💵 *RINCIAN BIAYA*
-• Total Biaya: Rp ${totalPrice.toLocaleString('id-ID')}
-
-Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku. Terima kasih.`;
-
-            const whatsappUrl = `https://wa.me/${ALTHERA_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-            showNotification('Pesanan berhasil! Silakan lanjutkan konfirmasi via WhatsApp.', 'success');
-
-            // Reset form after successful submission
-            setTimeout(function() {
-                const bookingForm = document.getElementById('bookingForm');
-                if (bookingForm) {
-                    bookingForm.reset();
-                    updateBookingSummary();
-                }
-            }, 2000);
-        };
-    }
-}
-
 // Login System untuk AltheraWork
 function initializeLoginSystem() {
     // Login Modal
@@ -992,7 +876,7 @@ function initializeLoginSystem() {
     });
     
     // Login form submission
-    const loginForm = document.getElementById('loginForm');
+    const loginForm = document.getElementById('loginFormData');
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1008,7 +892,7 @@ function initializeLoginSystem() {
     }
     
     // Register form submission
-    const registerForm = document.getElementById('registerForm');
+    const registerForm = document.getElementById('registerFormData');
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1050,8 +934,8 @@ function validateLoginForm(email, password) {
         return false;
     }
     
-    if (!isValidEmail(email)) {
-        showNotification('Format email tidak valid.', 'error');
+    if (!isValidEmail(email) && !isValidPhone(email)) {
+        showNotification('Format email atau nomor telepon tidak valid.', 'error');
         return false;
     }
     
@@ -1245,30 +1129,16 @@ function logoutUser() {
     }
 }
 
-// Update initializeAllComponents function untuk include fitur baru
-const originalInitializeAllComponents = window.initializeAllComponents;
-window.initializeAllComponents = function() {
-    if (originalInitializeAllComponents) {
-        originalInitializeAllComponents();
-    }
-    
-    // Initialize new features
-    updateBrandReferences();
-    initializeLoginSystem();
-    checkLoginStatus();
-};
-
-// Update DOMContentLoaded untuk include inisialisasi baru
+// Initialize service selection when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('AltheraWork Website Loaded Successfully');
-    
-    // Update brand references
-    updateBrandReferences();
-    
+
     // Add subtle animation to all interactive elements
     const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
     interactiveElements.forEach(function(el) {
         el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     });
-});
+
+    // Initialize service selection
+    initializeServiceSelection();
 });
