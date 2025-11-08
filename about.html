@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - AltheraWork Jasa Tenaga Harian</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-icon">A</div>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Informasi Perusahaan...</p>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp" id="floatingWhatsApp">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-tooltip">
+            Hubungi kami via WhatsApp!
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="services.html">Layanan</a></li>
+                    <li><a href="about.html" class="active">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Sekarang</a></li>
+                </ul>
+
+                <!-- User Profile -->
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar">U</div>
+                    <span class="user-name">User</span>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button class="btn btn-secondary" id="loginBtn" style="margin-left: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="modal-header">
+                <h3>Login ke AltheraWork</h3>
+                <button class="modal-close" id="closeLogin">&times;</button>
+            </div>
+            <div class="login-tabs">
+                <button class="login-tab active" data-tab="login">Login</button>
+                <button class="login-tab" data-tab="register">Daftar</button>
+            </div>
+
+            <div class="login-form">
+                <!-- Login Form -->
+                <div class="login-form-content" id="loginForm" style="display: block;">
+                    <form id="loginFormData">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required placeholder="Masukkan password">
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Ingat saya
+                            </label>
+                            <a href="#" class="forgot-password">Lupa password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="login-form-content" id="registerForm">
+                    <form id="registerFormData">
+                        <div class="form-group">
+                            <label for="registerName">Nama Lengkap</label>
+                            <input type="text" id="registerName" name="name" required placeholder="Masukkan nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Nomor Telepon</label>
+                            <input type="tel" id="registerPhone" name="phone" required placeholder="+62 812-3456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" name="password" required placeholder="Minimal 6 karakter">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Konfirmasi Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Ulangi password">
+                        </div>
+                        <div class="form-agreement">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="registerAgree" required>
+                                <span class="checkmark"></span>
+                                Saya menyetujui <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> Daftar Sekarang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 data-aos="fade-up">Tentang AltheraWork</h1>
+                <p data-aos="fade-up" data-aos-delay="200">Mengenal lebih dekat perusahaan dan tim profesional di balik layanan terbaik kami</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-page">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right" data-aos-duration="1000">
+                    <h2>Misi Kami</h2>
+                    <p>AltheraWork hadir sebagai solusi terpercaya untuk memenuhi kebutuhan tenaga fisik harian masyarakat Indonesia. Kami memahami bahwa terkadang Anda membutuhkan bantuan ekstra untuk menyelesaikan pekerjaan fisik yang membutuhkan tenaga
+                        dan waktu.</p>
+
+                    <p>Dengan komitmen untuk memberikan pelayanan terbaik, kami menghadirkan tenaga kerja profesional yang terlatih, berpengalaman, dan dapat diandalkan untuk berbagai kebutuhan fisik mulai dari pekerjaan rumah tangga hingga proyek konstruksi
+                        ringan.
+                    </p>
+
+                    <h3>Visi Kami</h3>
+                    <p>Menjadi penyedia jasa tenaga harian terdepan di Indonesia yang dikenal dengan kualitas pelayanan terbaik, keandalan, dan profesionalisme tinggi.</p>
+
+                    <h3>Nilai Perusahaan</h3>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <strong>Profesionalisme:</strong> Tim yang terlatih dan berpengalaman</li>
+                        <li><i class="fas fa-check"></i> <strong>Keandalan:</strong> Selalu tepat waktu dan dapat diandalkan</li>
+                        <li><i class="fas fa-check"></i> <strong>Kualitas:</strong> Hasil kerja yang memuaskan dan berkualitas</li>
+                        <li><i class="fas fa-check"></i> <strong>Integritas:</strong> Transparan dalam harga dan pelayanan</li>
+                        <li><i class="fas fa-check"></i> <strong>Inovasi:</strong> Terus beradaptasi dengan kebutuhan pelanggan</li>
+                    </ul>
+                </div>
+                <div class="about-image" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="image-placeholder">
+                        <i class="fas fa-building"></i>
+                        <p>AltheraWork Headquarters</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="hero-stats" style="margin-top: 4rem;" data-aos="fade-up">
+                <div class="stat">
+                    <h3 data-count="3">0</h3>
+                    <p>Tahun Pengalaman</p>
+                </div>
+                <div class="stat">
+                    <h3 data-count="500">0</h3>
+                    <p>Proyek Selesai</p>
+                </div>
+                <div class="stat">
+                    <h3 data-count="150">0</h3>
+                    <p>Klien Puas</p>
+                </div>
+                <div class="stat">
+                    <h3 data-count="50">0</h3>
+                    <p>Tenaga Ahli</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Tim Kami</h2>
+                <p>Para profesional di balik kesuksesan AltheraWork</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Budi Santoso</h3>
+                        <p>Founder & CEO</p>
+                        <p>Pengalaman 10 tahun di industri jasa dan manajemen</p>
+                    </div>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="400">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Sari Dewi</h3>
+                        <p>Operation Manager</p>
+                        <p>Ahli dalam mengelola tim dan operasional harian</p>
+                    </div>
+                    <div class="member-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="fade-up" data-aos-delay="600">
+                    <div class="member-avatar">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3>Tim Tenaga Ahli</h3>
+                        <p>Professional Workers</p>
+                        <p>50+ tenaga terlatih dengan berbagai keahlian khusus</p>
+                    </div>
+                    <div class="member-social">
+                        <a href="#"><i class="fas fa-certificate"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="services-page">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Mengapa Memilih AltheraWork?</h2>
+                <p>Keunggulan yang membuat kami berbeda dari yang lain</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Terjamin & Aman</h3>
+                    <p>Semua tenaga kerja melalui proses seleksi ketat dan memiliki track record yang baik</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Tersedia 24/7</h3>
+                    <p>Layanan siap kapan saja Anda butuhkan, termasuk weekend dan hari libur</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Harga Terjangkau</h3>
+                    <p>Biaya transparan tanpa hidden cost, sesuai dengan kualitas layanan</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Profesional</h3>
+                    <p>Tim yang terlatih dan berpengalaman dalam berbagai jenis pekerjaan fisik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in" data-aos-duration="1000">
+                <h2>Siap Bekerja Sama dengan Kami?</h2>
+                <p>Percayakan kebutuhan tenaga fisik Anda pada tim profesional AltheraWork. Hasil memuaskan terjamin!</p>
+                <div class="cta-buttons">
+                    <a href="booking.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-calendar-plus"></i> Pesan Sekarang
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary btn-large">
+                        <i class="fas fa-phone-alt"></i> Hubungi Kami
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="services.html">Konstruksi Ringan</a></li>
+                        <li><a href="services.html">Bongkar Pasang</a></li>
+                        <li><a href="services.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pesan via WhatsApp</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pesan Anda akan dikirim ke WhatsApp kami. Pastikan data sudah benar sebelum mengirim.</p>
+                <div class="order-summary">
+                    <h4>Ringkasan Pesanan:</h4>
+                    <div id="orderDetails"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelOrder">Periksa Kembali</button>
+                <button class="btn btn-primary" id="confirmWhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

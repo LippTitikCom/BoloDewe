@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Layanan - AltheraWork</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-hammer"></i>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Mempersiapkan Form Pemesanan...</p>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp" id="floatingWhatsApp">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-tooltip">
+            Butuh Bantuan? Chat Kami!
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-hammer"></i>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="services.html">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking active">Pesan Sekarang</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 data-aos="fade-up">Pesan Layanan</h1>
+                <p data-aos="fade-up" data-aos-delay="200">Isi form berikut untuk memesan layanan tenaga harian kami dengan mudah dan cepat</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section class="booking-page">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-form" data-aos="fade-right">
+                    <h2>Form Pemesanan</h2>
+                    <p class="form-description">Lengkapi data berikut untuk proses pemesanan yang lancar</p>
+
+                    <form id="bookingForm">
+                        <!-- Data Identitas -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-id-card"></i> Data Identitas</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Nama Lengkap *</label>
+                                    <input type="text" id="fullName" name="fullName" required placeholder="Masukkan nama lengkap sesuai KTP">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Nomor Telepon *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+62 812-3456-7890">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="nama@email.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="identityType">Jenis Identitas *</label>
+                                    <select id="identityType" name="identityType" required>
+                                        <option value="">Pilih Jenis Identitas</option>
+                                        <option value="ktp">KTP</option>
+                                        <option value="sim">SIM</option>
+                                        <option value="paspor">Paspor</option>
+                                        <option value="lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="identityNumber">Nomor Identitas *</label>
+                                <input type="text" id="identityNumber" name="identityNumber" required placeholder="Masukkan nomor identitas">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Alamat Lengkap *</label>
+                                <textarea id="address" name="address" rows="3" required placeholder="Jl. Contoh No. 123, Kecamatan, Kota, Kode Pos"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Data Pemesanan -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-clipboard-list"></i> Data Pemesanan</h3>
+                            <div class="form-group">
+                                <label for="serviceType">Jenis Layanan *</label>
+                                <select id="serviceType" name="serviceType" required>
+                                    <option value="">Pilih Layanan</option>
+                                    <option value="Pekerjaan Rumah Tangga - Rp 150.000/hari">Pekerjaan Rumah Tangga - Rp 150.000/hari</option>
+                                    <option value="Pindahan & Pengangkutan - Rp 200.000/hari">Pindahan & Pengangkutan - Rp 200.000/hari</option>
+                                    <option value="Konstruksi Ringan - Rp 250.000/hari">Konstruksi Ringan - Rp 250.000/hari</option>
+                                    <option value="Bongkar Pasang - Rp 175.000/hari">Bongkar Pasang - Rp 175.000/hari</option>
+                                    <option value="Landscaping - Rp 180.000/hari">Landscaping - Rp 180.000/hari</option>
+                                    <option value="Layanan Khusus - Rp 160.000/hari">Layanan Khusus - Rp 160.000/hari</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="workDate">Tanggal Pekerjaan *</label>
+                                    <input type="date" id="workDate" name="workDate" required min="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="workDuration">Durasi (hari) *</label>
+                                    <select id="workDuration" name="workDuration" required>
+                                        <option value="1">1 Hari</option>
+                                        <option value="2">2 Hari</option>
+                                        <option value="3">3 Hari</option>
+                                        <option value="4">4 Hari</option>
+                                        <option value="5">5 Hari</option>
+                                        <option value="6">6 Hari</option>
+                                        <option value="7">7 Hari</option>
+                                        <option value="custom">Custom (akan dikonfirmasi)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="workTime">Waktu Pekerjaan</label>
+                                <select id="workTime" name="workTime">
+                                    <option value="pagi">Pagi (08:00 - 12:00)</option>
+                                    <option value="siang">Siang (13:00 - 17:00)</option>
+                                    <option value="custom">Custom (akan dikonfirmasi)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="workAddress">Lokasi Pekerjaan *</label>
+                                <textarea id="workAddress" name="workAddress" rows="2" required placeholder="Alamat lengkap lokasi pekerjaan"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="specialRequest">Permintaan Khusus</label>
+                                <textarea id="specialRequest" name="specialRequest" rows="3" placeholder="Jelaskan detail pekerjaan yang dibutuhkan, peralatan khusus, atau permintaan lainnya..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Upload Identitas -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-cloud-upload-alt"></i> Upload Identitas</h3>
+                            <p class="form-info">Upload foto identitas (KTP/SIM) untuk verifikasi. File maksimal 2MB, format JPG/PNG.</p>
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Klik untuk upload foto identitas</p>
+                                <span>Format: JPG, PNG (Maks. 2MB)</span>
+                                <input type="file" id="identityFile" name="identityFile" accept="image/*" hidden>
+                            </div>
+                            <div class="upload-preview" id="uploadPreview"></div>
+                        </div>
+
+                        <!-- Agreement -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-file-contract"></i> Persetujuan</h3>
+                            <div class="form-agreement">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                    <span class="checkmark"></span>
+                                    Saya menyetujui <a href="#" target="_blank">Syarat dan Ketentuan</a> serta <a href="#" target="_blank">Kebijakan Privasi</a> PowerWork
+                                </label>
+                            </div>
+                            <div class="form-agreement">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="agreeData" name="agreeData" required>
+                                    <span class="checkmark"></span>
+                                    Saya memberikan persetujuan untuk pengolahan data pribadi sesuai dengan kebijakan yang berlaku
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large btn-block">
+                            <i class="fab fa-whatsapp"></i>
+                            Lanjutkan ke WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+                <div class="booking-summary" data-aos="fade-left">
+                    <div class="summary-card">
+                        <h3>Ringkasan Pesanan</h3>
+                        <div class="summary-content">
+                            <div class="summary-item">
+                                <span>Layanan:</span>
+                                <span id="summaryService">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Durasi:</span>
+                                <span id="summaryDuration">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Tanggal:</span>
+                                <span id="summaryDate">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Waktu:</span>
+                                <span id="summaryTime">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Harga per hari:</span>
+                                <span id="summaryPrice">-</span>
+                            </div>
+                            <div class="summary-total">
+                                <span>Total Biaya:</span>
+                                <span id="summaryTotal">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-info">
+                        <h4><i class="fas fa-info-circle"></i> Informasi Penting</h4>
+                        <ul>
+                            <li>Pastikan data identitas yang diisi benar dan valid</li>
+                            <li>Foto identitas harus jelas terbaca dan tidak blur</li>
+                            <li>Pembayaran dilakukan setelah pekerjaan selesai</li>
+                            <li>Gratis konsultasi sebelum pemesanan</li>
+                            <li>Garansi kepuasan 100% untuk semua layanan</li>
+                            <li>Bebas biaya cancel hingga H-1 pekerjaan</li>
+                        </ul>
+                    </div>
+
+                    <div class="support-info">
+                        <h4><i class="fas fa-headset"></i> Butuh Bantuan?</h4>
+                        <p>Tim customer service kami siap membantu Anda:</p>
+                        <div class="support-contacts">
+                            <a href="https://wa.me/6281235825391" class="btn btn-service" style="margin-bottom: 10px;">
+                                <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                            </a>
+                            <a href="tel:+6281235825391" class="btn btn-secondary">
+                                <i class="fas fa-phone"></i> Telepon Kami
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Proses Setelah Pemesanan</h2>
+                <p>Apa yang terjadi setelah Anda mengisi form pemesanan?</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Konfirmasi Pemesanan</h3>
+                    <p>Tim kami akan menghubungi Anda via WhatsApp untuk konfirmasi detail pemesanan</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Verifikasi Data</h3>
+                    <p>Data identitas dan pemesanan akan diverifikasi oleh tim admin kami</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="600">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Penjadwalan</h3>
+                    <p>Jadwal pekerjaan akan dikonfirmasi dan tenaga kerja akan disiapkan</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="800">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Eksekusi Pekerjaan</h3>
+                    <p>Tenaga kerja profesional kami akan datang sesuai jadwal yang disepakati</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-hammer"></i>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="services.html">Konstruksi Ringan</a></li>
+                        <li><a href="services.html">Bongkar Pasang</a></li>
+                        <li><a href="services.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@powerwork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Konfirmasi Pemesanan</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pesanan Anda akan dikirim ke WhatsApp kami untuk konfirmasi final. Pastikan semua data sudah benar.</p>
+                <div class="order-summary">
+                    <h4>Ringkasan Pesanan:</h4>
+                    <div id="orderDetails"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelOrder">Periksa Kembali</button>
+                <button class="btn btn-primary" id="confirmWhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

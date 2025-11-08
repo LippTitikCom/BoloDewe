@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - AltheraWork Jasa Tenaga Harian</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-hammer"></i>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Informasi Kontak...</p>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp" id="floatingWhatsApp">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-tooltip">
+            Hubungi kami via WhatsApp!
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-hammer"></i>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="services.html">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html" class="active">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Sekarang</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 data-aos="fade-up">Hubungi Kami</h1>
+                <p data-aos="fade-up" data-aos-delay="200">Kami siap membantu Anda 24/7. Jangan ragu untuk menghubungi tim profesional kami</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-page">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Alamat Kantor</h4>
+                            <p>Jl. Tenaga Kerja No. 123<br>Jakarta Selatan, 12540<br>Indonesia</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Telepon/WhatsApp</h4>
+                            <p>+628123582539 (Primary)<br>+62 813-4567-8901 (Alternate)<br>24/7 Customer Service</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>info@powerwork.id<br>booking@powerwork.id<br>support@powerwork.id</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Jam Operasional</h4>
+                            <p>Senin - Minggu<br>07:00 - 20:00 WIB<br>Emergency Service: 24/7</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <h4>Ikuti Kami di Media Sosial</h4>
+                        <div class="social-icons">
+                            <a href="#" title="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" title="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" title="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" title="YouTube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form" data-aos="fade-left" data-aos-duration="1000">
+                    <h3>Kirim Pesan kepada Kami</h3>
+                    <p>Isi form berikut dan kami akan menghubungi Anda dalam waktu 24 jam</p>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap *</label>
+                            <input type="text" id="name" name="name" required placeholder="Masukkan nama lengkap Anda">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Nomor Telepon *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+62 812-3456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subjek Pesan</label>
+                            <select id="subject" name="subject">
+                                <option value="">Pilih subjek pesan</option>
+                                <option value="konsultasi">Konsultasi Layanan</option>
+                                <option value="penawaran">Permintaan Penawaran</option>
+                                <option value="keluhan">Keluhan & Saran</option>
+                                <option value="kerjasama">Peluang Kerjasama</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Jenis Layanan yang Diminati</label>
+                            <select id="service" name="service">
+                                <option value="">Pilih layanan</option>
+                                <option value="Pekerjaan Rumah Tangga">Pekerjaan Rumah Tangga</option>
+                                <option value="Pindahan & Pengangkutan">Pindahan & Pengangkutan</option>
+                                <option value="Konstruksi Ringan">Konstruksi Ringan</option>
+                                <option value="Bongkar Pasang">Bongkar Pasang</option>
+                                <option value="Landscaping">Landscaping</option>
+                                <option value="Layanan Khusus">Layanan Khusus</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan *</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Jelaskan kebutuhan Anda secara detail..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i>
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Lokasi Kami</h2>
+                <p>Kunjungi kantor kami atau hubungi untuk konsultasi gratis</p>
+            </div>
+            <div class="map-container" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>AltheraWork Headquarters</h3>
+                    <p>Jl. Tenaga Kerja No. 123, Jakarta Selatan</p>
+                    <div class="map-features">
+                        <div class="map-feature">
+                            <i class="fas fa-car"></i>
+                            <span>Parkir Luas</span>
+                        </div>
+                        <div class="map-feature">
+                            <i class="fas fa-wheelchair"></i>
+                            <span>Akses Disabilitas</span>
+                        </div>
+                        <div class="map-feature">
+                            <i class="fas fa-train"></i>
+                            <span>Dekat Stasiun</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="services-page">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Pertanyaan Umum</h2>
+                <p>Berikut adalah beberapa pertanyaan yang sering diajukan oleh pelanggan kami</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Bagaimana cara memesan layanan PowerWork?</h3>
+                    <p>Anda dapat memesan melalui website dengan mengisi form pemesanan, menghubungi WhatsApp kami, atau datang langsung ke kantor. Prosesnya cepat dan mudah!</p>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <h3>Apakah tersedia layanan darurat?</h3>
+                    <p>Ya, kami menyediakan layanan darurat 24/7 untuk kebutuhan mendesak. Hubungi nomor emergency kami untuk bantuan cepat.</p>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                    <h3>Bagaimana sistem pembayarannya?</h3>
+                    <p>Pembayaran dapat dilakukan secara tunai setelah pekerjaan selesai, transfer bank, atau melalui payment gateway. Kami menerima berbagai metode pembayaran.</p>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="800">
+                    <h3>Apakah ada garansi untuk layanan?</h3>
+                    <p>Ya, semua layanan kami memiliki garansi kepuasan. Jika tidak puas dengan hasil kerja, kami akan memperbaikinya tanpa biaya tambahan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in" data-aos-duration="1000">
+                <h2>Butuh Bantuan Cepat?</h2>
+                <p>Tim customer service kami siap membantu Anda 24 jam. Jangan ragu untuk menghubungi kami untuk konsultasi gratis.</p>
+                <div class="cta-buttons">
+                    <a href="https://wa.me/6281235825391" class="btn btn-primary btn-large">
+                        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                    </a>
+                    <a href="tel:+6281235825391" class="btn btn-secondary btn-large">
+                        <i class="fas fa-phone"></i> Telepon Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-hammer"></i>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="services.html">Konstruksi Ringan</a></li>
+                        <li><a href="services.html">Bongkar Pasang</a></li>
+                        <li><a href="services.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +628123582539</li>
+                        <li><i class="fas fa-envelope"></i> info@powerwork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pesan via WhatsApp</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pesan Anda akan dikirim ke WhatsApp kami. Pastikan data sudah benar sebelum mengirim.</p>
+                <div class="order-summary">
+                    <h4>Ringkasan Pesanan:</h4>
+                    <div id="orderDetails"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelOrder">Periksa Kembali</button>
+                <button class="btn btn-primary" id="confirmWhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

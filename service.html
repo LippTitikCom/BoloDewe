@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan - AltheraWork Jasa Tenaga Harian</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-icon">A</div>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Layanan Terbaik...</p>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp" id="floatingWhatsApp">
+        <div class="whatsapp-icon">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <div class="whatsapp-tooltip">
+            Hubungi kami via WhatsApp!
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="service.html" class="active">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Sekarang</a></li>
+                </ul>
+
+                <!-- User Profile -->
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar">U</div>
+                    <span class="user-name">User</span>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button class="btn btn-secondary" id="loginBtn" style="margin-left: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="modal-header">
+                <h3>Login ke AltheraWork</h3>
+                <button class="modal-close" id="closeLogin">&times;</button>
+            </div>
+            <div class="login-tabs">
+                <button class="login-tab active" data-tab="login">Login</button>
+                <button class="login-tab" data-tab="register">Daftar</button>
+            </div>
+
+            <div class="login-form">
+                <!-- Login Form -->
+                <div class="login-form-content" id="loginForm" style="display: block;">
+                    <form id="loginFormData">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required placeholder="Masukkan password">
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Ingat saya
+                            </label>
+                            <a href="#" class="forgot-password">Lupa password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="login-form-content" id="registerForm">
+                    <form id="registerFormData">
+                        <div class="form-group">
+                            <label for="registerName">Nama Lengkap</label>
+                            <input type="text" id="registerName" name="name" required placeholder="Masukkan nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Nomor Telepon</label>
+                            <input type="tel" id="registerPhone" name="phone" required placeholder="+62 812-3456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" name="password" required placeholder="Minimal 6 karakter">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Konfirmasi Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Ulangi password">
+                        </div>
+                        <div class="form-agreement">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="registerAgree" required>
+                                <span class="checkmark"></span>
+                                Saya menyetujui <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> Daftar Sekarang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 data-aos="fade-up">Layanan Kami</h1>
+                <p data-aos="fade-up" data-aos-delay="200">Berbagai jasa tenaga harian profesional untuk semua kebutuhan fisik Anda</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-page">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3>Pekerjaan Rumah Tangga</h3>
+                    <p>Bantuan profesional untuk pekerjaan rumah tangga dengan hasil maksimal dan kepuasan terjamin.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Pembersihan menyeluruh</li>
+                        <li><i class="fas fa-check"></i> Perawatan taman & halaman</li>
+                        <li><i class="fas fa-check"></i> Pencucian kendaraan</li>
+                        <li><i class="fas fa-check"></i> Penataan rumah</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 150.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=rumah-tangga" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-truck-moving"></i>
+                    </div>
+                    <h3>Pindahan & Pengangkutan</h3>
+                    <p>Layanan pindahan profesional dengan penanganan barang yang aman dan terpercaya.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Bongkar muat barang</li>
+                        <li><i class="fas fa-check"></i> Penataan furniture</li>
+                        <li><i class="fas fa-check"></i> Pengangkutan aman</li>
+                        <li><i class="fas fa-check"></i> Bantuan packaging</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 200.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=pindahan" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Konstruksi Ringan</h3>
+                    <p>Tenaga ahli untuk pekerjaan konstruksi ringan dan perbaikan rumah dengan kualitas terbaik.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Perbaikan rumah</li>
+                        <li><i class="fas fa-check"></i> Pemasangan furniture</li>
+                        <li><i class="fas fa-check"></i> Renovasi kecil</li>
+                        <li><i class="fas fa-check"></i> Instalasi ringan</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 250.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=konstruksi" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="service-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3>Bongkar Pasang</h3>
+                    <p>Jasa bongkar pasang perabotan, AC, dan instalasi ringan lainnya dengan tenaga berpengalaman.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Bongkar pasang furniture</li>
+                        <li><i class="fas fa-check"></i> Instalasi AC</li>
+                        <li><i class="fas fa-check"></i> Pemasangan rak</li>
+                        <li><i class="fas fa-check"></i> Demolition ringan</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 175.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=bongkar-pasang" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="service-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Landscaping</h3>
+                    <p>Perawatan dan penataan taman, pemotongan rumput, perawatan tanaman, dan pekerjaan outdoor lainnya.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Perawatan taman</li>
+                        <li><i class="fas fa-check"></i> Pemotongan rumput</li>
+                        <li><i class="fas fa-check"></i> Penanaman pohon</li>
+                        <li><i class="fas fa-check"></i> Irrigation maintenance</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 180.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=landscaping" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Layanan Khusus</h3>
+                    <p>Kebutuhan tenaga fisik khusus sesuai permintaan dengan penyesuaian jadwal dan kemampuan.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Tenaga event</li>
+                        <li><i class="fas fa-check"></i> Bantuan gudang</li>
+                        <li><i class="fas fa-check"></i> Layanan khusus</li>
+                        <li><i class="fas fa-check"></i> Custom request</li>
+                    </ul>
+                    <div class="service-price">
+                        <span class="price">Rp 160.000</span>
+                        <span class="duration">/hari</span>
+                    </div>
+                    <a href="booking.html?service=khusus" class="btn-service">
+                        <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Cara Memesan</h2>
+                <p>Proses mudah untuk mendapatkan layanan kami</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Pilih Layanan</h3>
+                    <p>Pilih jenis layanan yang sesuai dengan kebutuhan Anda dari berbagai pilihan yang tersedia</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Isi Form Pemesanan</h3>
+                    <p>Lengkapi data identitas dan detail pemesanan melalui form yang mudah diisi</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="600">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-whatsapp"></i>
+                    </div>
+                    <h3>Konfirmasi via WhatsApp</h3>
+                    <p>Pesan akan dikirim ke WhatsApp untuk konfirmasi final dan penjadwalan</p>
+                </div>
+                <div class="process-step" data-aos="fade-up" data-aos-delay="800">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h3>Tenaga Kami Datang</h3>
+                    <p>Tim profesional kami akan datang sesuai jadwal yang telah disepakati</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in" data-aos-duration="1000">
+                <h2>Siap Memesan Layanan Kami?</h2>
+                <p>Jangan ragu untuk menghubungi kami. Tim profesional kami siap membantu kebutuhan tenaga fisik Anda dengan solusi terbaik.</p>
+                <div class="cta-buttons">
+                    <a href="booking.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-calendar-plus"></i> Pesan Sekarang
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary btn-large">
+                        <i class="fas fa-phone-alt"></i> Hubungi Kami
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="services.html">Konstruksi Ringan</a></li>
+                        <li><a href="services.html">Bongkar Pasang</a></li>
+                        <li><a href="services.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +6281235825391</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pesan via WhatsApp</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pesan Anda akan dikirim ke WhatsApp kami. Pastikan data sudah benar sebelum mengirim.</p>
+                <div class="order-summary">
+                    <h4>Ringkasan Pesanan:</h4>
+                    <div id="orderDetails"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelOrder">Periksa Kembali</button>
+                <button class="btn btn-primary" id="confirmWhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AltheraWork</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-icon">A</div>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Dashboard...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="services.html">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Layanan</a></li>
+                </ul>
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar">U</div>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-header" data-aos="fade-up">
+                <h1>Dashboard</h1>
+                <p>Kelola pesanan dan akun Anda di sini</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3><i class="fas fa-clipboard-list"></i> Total Pesanan</h3>
+                    <div class="number" id="totalOrders">0</div>
+                    <p>Semua pesanan yang pernah Anda buat</p>
+                </div>
+                <div class="dashboard-card" data-aos="fade-up" data-aos-delay="400">
+                    <h3><i class="fas fa-clock"></i> Pesanan Berjalan</h3>
+                    <div class="number" id="activeOrders">0</div>
+                    <p>Pesanan yang sedang dalam proses</p>
+                </div>
+                <div class="dashboard-card" data-aos="fade-up" data-aos-delay="600">
+                    <h3><i class="fas fa-check-circle"></i> Pesanan Selesai</h3>
+                    <div class="number" id="completedOrders">0</div>
+                    <p>Pesanan yang telah diselesaikan</p>
+                </div>
+            </div>
+
+            <div class="order-history" data-aos="fade-up" data-aos-delay="800">
+                <h2>Riwayat Pesanan Terbaru</h2>
+                <div id="orderList">
+                    <!-- Orders will be populated by JavaScript -->
+                    <p class="text-center">Belum ada pesanan. <a href="booking.html">Pesan layanan sekarang!</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="services.html">Konstruksi Ringan</a></li>
+                        <li><a href="services.html">Bongkar Pasang</a></li>
+                        <li><a href="services.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Dashboard-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Load user orders
+            loadUserOrders(session.userId);
+        });
+
+        function loadUserOrders(userId) {
+            // In a real application, this would be an API call
+            // For demo, we'll use localStorage
+            const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+            const userOrders = orders.filter(order => order.userId === userId);
+
+            // Update stats
+            document.getElementById('totalOrders').textContent = userOrders.length;
+            document.getElementById('activeOrders').textContent = userOrders.filter(o => o.status === 'processing').length;
+            document.getElementById('completedOrders').textContent = userOrders.filter(o => o.status === 'completed').length;
+
+            // Display orders
+            const orderList = document.getElementById('orderList');
+
+            if (userOrders.length === 0) {
+                orderList.innerHTML = '<p class="text-center">Belum ada pesanan. <a href="booking.html">Pesan layanan sekarang!</a></p>';
+                return;
+            }
+
+            let ordersHTML = '';
+            userOrders.slice(0, 5).forEach(order => {
+                let statusClass = '';
+                let statusText = '';
+
+                switch (order.status) {
+                    case 'pending':
+                        statusClass = 'status-pending';
+                        statusText = 'Menunggu Konfirmasi';
+                        break;
+                    case 'processing':
+                        statusClass = 'status-processing';
+                        statusText = 'Dalam Proses';
+                        break;
+                    case 'completed':
+                        statusClass = 'status-completed';
+                        statusText = 'Selesai';
+                        break;
+                }
+
+                ordersHTML += `
+                    <div class="order-item">
+                        <div>
+                            <h4>${order.service}</h4>
+                            <p>${order.date} | ${order.duration} hari</p>
+                        </div>
+                        <div>
+                            <span class="order-status ${statusClass}">${statusText}</span>
+                            <p><strong>${order.total}</strong></p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            orderList.innerHTML = ordersHTML;
+
+            if (userOrders.length > 5) {
+                orderList.innerHTML += '<p class="text-center"><a href="orders.html">Lihat semua pesanan</a></p>';
+            }
+        }
+    </script>
+</body>
+
+</html>
