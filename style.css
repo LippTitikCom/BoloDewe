@@ -202,6 +202,7 @@ header {
 #loginBtn {
     margin-left: 1rem;
     padding: 10px 20px;
+    color: black; 
     font-size: 0.9rem;
     border: none;
     cursor: pointer;
@@ -2150,3 +2151,4 @@ textarea.form-control {
         padding: 1rem;
     }
 }
+
