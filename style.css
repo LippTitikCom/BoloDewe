@@ -1338,6 +1338,11 @@ textarea.form-control {
     font-size: 2.2rem;
 }
 
+.form-container {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
 .form-section {
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
@@ -2961,4 +2966,5 @@ input:checked + .slider:before {
     width: 20px;
     text-align: center;
 }
+
 
