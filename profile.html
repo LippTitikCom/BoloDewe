@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - AltheraWork</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-icon">A</div>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Profil...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="service.html">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Layanan</a></li>
+                </ul>
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar" id="headerAvatar">U</div>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-header" data-aos="fade-up">
+                <h1>Profil Saya</h1>
+                <p>Kelola informasi profil dan akun Anda</p>
+            </div>
+
+            <div class="profile-container">
+                <div class="profile-sidebar" data-aos="fade-right">
+                    <div class="profile-card">
+                        <div class="profile-avatar-container">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <span id="avatarText">U</span>
+                                <input type="file" id="avatarUpload" accept="image/*" hidden>
+                            </div>
+                            <button class="avatar-edit-btn" onclick="document.getElementById('avatarUpload').click()">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <h3 id="profileName">User Name</h3>
+                        <p id="profileEmail">user@email.com</p>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-number" id="totalOrdersCount">0</span>
+                                <span class="stat-label">Total Pesanan</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-number" id="memberSince">2023</span>
+                                <span class="stat-label">Member Sejak</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-menu">
+                        <a href="#personal-info" class="profile-menu-item active" onclick="showProfileSection('personal-info')">
+                            <i class="fas fa-user"></i> Informasi Pribadi
+                        </a>
+                        <a href="#security" class="profile-menu-item" onclick="showProfileSection('security')">
+                            <i class="fas fa-shield-alt"></i> Keamanan
+                        </a>
+                        <a href="#preferences" class="profile-menu-item" onclick="showProfileSection('preferences')">
+                            <i class="fas fa-cog"></i> Pengaturan
+                        </a>
+                    </div>
+                </div>
+
+                <div class="profile-content" data-aos="fade-left">
+                    <!-- Personal Information Section -->
+                    <div class="profile-section active" id="personal-info-section">
+                        <h2>Informasi Pribadi</h2>
+                        <p>Kelola informasi profil dan cara orang lain melihat Anda di platform</p>
+
+                        <form class="profile-form" id="personalInfoForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Nama Lengkap</label>
+                                    <input type="text" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">Nomor Telepon</label>
+                                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required readonly>
+                                <small>Email tidak dapat diubah</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Alamat</label>
+                                <textarea id="address" name="address" rows="3" placeholder="Masukkan alamat lengkap"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="identityType">Jenis Identitas</label>
+                                    <select id="identityType" name="identityType">
+                                        <option value="">Pilih Jenis Identitas</option>
+                                        <option value="ktp">KTP</option>
+                                        <option value="sim">SIM</option>
+                                        <option value="paspor">Paspor</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="identityNumber">Nomor Identitas</label>
+                                    <input type="text" id="identityNumber" name="identityNumber">
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Security Section -->
+                    <div class="profile-section" id="security-section">
+                        <h2>Keamanan Akun</h2>
+                        <p>Kelola kata sandi dan pengaturan keamanan akun Anda</p>
+
+                        <div class="security-options">
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Ubah Kata Sandi</h4>
+                                    <p>Perbarui kata sandi Anda secara berkala untuk menjaga keamanan akun</p>
+                                </div>
+                                <button class="btn btn-secondary" onclick="showChangePasswordModal()">
+                                    Ubah Kata Sandi
+                                </button>
+                            </div>
+
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Verifikasi Email</h4>
+                                    <p>Email Anda telah terverifikasi</p>
+                                </div>
+                                <span class="verified-badge">
+                                    <i class="fas fa-check-circle"></i> Terverifikasi
+                                </span>
+                            </div>
+
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Sesi Aktif</h4>
+                                    <p>Kelola perangkat yang sedang login ke akun Anda</p>
+                                </div>
+                                <button class="btn btn-secondary" onclick="showActiveSessions()">
+                                    Kelola Sesi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences Section -->
+                    <div class="profile-section" id="preferences-section">
+                        <h2>Pengaturan Aplikasi</h2>
+                        <p>Personalisasi pengalaman Anda menggunakan AltheraWork</p>
+
+                        <div class="preferences-options">
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <h4>Notifikasi Email</h4>
+                                    <p>Terima pemberitahuan tentang pesanan dan promosi via email</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="emailNotifications" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <h4>Notifikasi WhatsApp</h4>
+                                    <p>Terima pemberitahuan penting via WhatsApp</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="whatsappNotifications" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <h4>Bahasa</h4>
+                                    <p>Pilih bahasa yang digunakan di aplikasi</p>
+                                </div>
+                                <select class="language-select" id="languagePreference">
+                                    <option value="id">Bahasa Indonesia</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+
+                            <div class="preference-item">
+                                <div class="preference-info">
+                                    <h4>Tema</h4>
+                                    <p>Pilih tampilan yang sesuai dengan preferensi Anda</p>
+                                </div>
+                                <select class="theme-select" id="themePreference">
+                                    <option value="light">Terang</option>
+                                    <option value="dark">Gelap</option>
+                                    <option value="auto">Sesuai Perangkat</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="savePreferences()">
+                            <i class="fas fa-save"></i> Simpan Pengaturan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Change Password Modal -->
+    <div class="whatsapp-modal" id="changePasswordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ubah Kata Sandi</h3>
+                <button class="modal-close" onclick="closeChangePasswordModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <label for="currentPassword">Kata Sandi Saat Ini</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">Kata Sandi Baru</label>
+                        <input type="password" id="newPassword" name="newPassword" required minlength="6">
+                        <small>Minimal 6 karakter</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Konfirmasi Kata Sandi Baru</label>
+                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                    </div>
+
+                    <div class="form-agreement">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="sendEmailConfirmation" checked>
+                            <span class="checkmark"></span>
+                            Kirim konfirmasi perubahan ke email
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeChangePasswordModal()">Batal</button>
+                <button class="btn btn-primary" onclick="changePassword()">
+                    <i class="fas fa-key"></i> Ubah Kata Sandi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="service.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="service.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="service.html">Konstruksi Ringan</a></li>
+                        <li><a href="service.html">Bongkar Pasang</a></li>
+                        <li><a href="service.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3582-5391</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Profile-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Load user profile data
+            loadUserProfile(session.userId);
+
+            // Initialize avatar upload
+            initializeAvatarUpload();
+        });
+
+        function loadUserProfile(userId) {
+            const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+            const user = users.find(u => u.id === userId);
+            const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+            const userOrders = orders.filter(order => order.userId === userId);
+
+            if (user) {
+                // Update profile information
+                document.getElementById('profileName').textContent = user.name || 'User Name';
+                document.getElementById('profileEmail').textContent = user.email || 'user@email.com';
+                document.getElementById('headerAvatar').textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                document.getElementById('avatarText').textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+
+                // Update form fields
+                document.getElementById('fullName').value = user.name || '';
+                document.getElementById('phoneNumber').value = user.phone || '';
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('address').value = user.address || '';
+                document.getElementById('identityType').value = user.identityType || '';
+                document.getElementById('identityNumber').value = user.identityNumber || '';
+
+                // Update stats
+                document.getElementById('totalOrdersCount').textContent = userOrders.length;
+                document.getElementById('memberSince').textContent = new Date(user.registrationDate).getFullYear();
+
+                // Load avatar if exists
+                if (user.avatar) {
+                    document.getElementById('profileAvatar').style.backgroundImage = `url(${user.avatar})`;
+                    document.getElementById('profileAvatar').innerHTML = '';
+                }
+            }
+        }
+
+        function initializeAvatarUpload() {
+            const avatarUpload = document.getElementById('avatarUpload');
+            avatarUpload.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        if (file.size > 2 * 1024 * 1024) {
+                            showNotification('File terlalu besar. Maksimal 2MB.', 'error');
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const profileAvatar = document.getElementById('profileAvatar');
+                            profileAvatar.style.backgroundImage = `url(${e.target.result})`;
+                            profileAvatar.innerHTML = '';
+
+                            // Save to user data
+                            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                                sessionStorage.getItem('altherawork_session'));
+                            if (session) {
+                                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                                const userIndex = users.findIndex(u => u.id === session.userId);
+                                if (userIndex !== -1) {
+                                    users[userIndex].avatar = e.target.result;
+                                    localStorage.setItem('altherawork_users', JSON.stringify(users));
+
+                                    // Update header avatar
+                                    document.getElementById('headerAvatar').style.backgroundImage = `url(${e.target.result})`;
+                                    document.getElementById('headerAvatar').innerHTML = '';
+                                }
+                            }
+
+                            showNotification('Foto profil berhasil diubah!', 'success');
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        showNotification('Harap pilih file gambar (JPG/PNG).', 'error');
+                    }
+                }
+            });
+        }
+
+        function showProfileSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all menu items
+            document.querySelectorAll('.profile-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(section + '-section').classList.add('active');
+
+            // Add active class to clicked menu item
+            event.target.classList.add('active');
+        }
+
+        function showChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.add('active');
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        function changePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmNewPassword) {
+                showNotification('Harap lengkapi semua field.', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showNotification('Password baru minimal 6 karakter.', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmNewPassword) {
+                showNotification('Konfirmasi password tidak cocok.', 'error');
+                return;
+            }
+
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (session) {
+                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                const userIndex = users.findIndex(u => u.id === session.userId);
+
+                if (userIndex !== -1) {
+                    // Check current password
+                    if (users[userIndex].password !== currentPassword) {
+                        showNotification('Password saat ini salah.', 'error');
+                        return;
+                    }
+
+                    // Update password
+                    users[userIndex].password = newPassword;
+                    localStorage.setItem('altherawork_users', JSON.stringify(users));
+
+                    // Send email confirmation if checked
+                    const sendEmail = document.getElementById('sendEmailConfirmation').checked;
+                    if (sendEmail) {
+                        // Simulate email sending
+                        setTimeout(() => {
+                            showNotification('Konfirmasi perubahan password telah dikirim ke email Anda.', 'success');
+                        }, 1000);
+                    }
+
+                    showNotification('Password berhasil diubah!', 'success');
+                    closeChangePasswordModal();
+                }
+            }
+        }
+
+        function savePreferences() {
+            const emailNotifications = document.getElementById('emailNotifications').checked;
+            const whatsappNotifications = document.getElementById('whatsappNotifications').checked;
+            const language = document.getElementById('languagePreference').value;
+            const theme = document.getElementById('themePreference').value;
+
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (session) {
+                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                const userIndex = users.findIndex(u => u.id === session.userId);
+
+                if (userIndex !== -1) {
+                    users[userIndex].preferences = {
+                        emailNotifications,
+                        whatsappNotifications,
+                        language,
+                        theme
+                    };
+                    localStorage.setItem('altherawork_users', JSON.stringify(users));
+
+                    showNotification('Pengaturan berhasil disimpan!', 'success');
+                }
+            }
+        }
+
+        // Personal info form submission
+        document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (session) {
+                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                const userIndex = users.findIndex(u => u.id === session.userId);
+
+                if (userIndex !== -1) {
+                    users[userIndex].name = document.getElementById('fullName').value;
+                    users[userIndex].phone = document.getElementById('phoneNumber').value;
+                    users[userIndex].address = document.getElementById('address').value;
+                    users[userIndex].identityType = document.getElementById('identityType').value;
+                    users[userIndex].identityNumber = document.getElementById('identityNumber').value;
+
+                    localStorage.setItem('altherawork_users', JSON.stringify(users));
+
+                    // Update displayed name
+                    document.getElementById('profileName').textContent = users[userIndex].name;
+                    document.getElementById('headerAvatar').textContent = users[userIndex].name.charAt(0).toUpperCase();
+                    document.getElementById('avatarText').textContent = users[userIndex].name.charAt(0).toUpperCase();
+
+                    showNotification('Profil berhasil diperbarui!', 'success');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
