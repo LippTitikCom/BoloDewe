@@ -26,6 +26,7 @@ function initializeAllComponents() {
     initializeFileUpload();
     initializeLoginSystem();
     checkLoginStatus();
+    checkAndUpdateAvatar();
 }
 
 // Loading Screen - FIXED
@@ -606,6 +607,9 @@ Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku. Terima kasi
 
     showNotification('Pesanan berhasil! Silakan lanjutkan konfirmasi via WhatsApp.', 'success');
 
+    // Save order to localStorage
+    saveOrderToLocalStorage(formData, totalPrice);
+
     // Reset form after successful submission
     setTimeout(function() {
         const bookingForm = document.getElementById('bookingForm');
@@ -614,6 +618,29 @@ Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku. Terima kasi
             updateBookingSummary();
         }
     }, 2000);
+}
+
+// Save order to localStorage
+function saveOrderToLocalStorage(formData, totalPrice) {
+    const session = JSON.parse(localStorage.getItem('altherawork_session') || 
+                              sessionStorage.getItem('altherawork_session'));
+    
+    if (session) {
+        const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+        const newOrder = {
+            id: 'order_' + Math.random().toString(36).substr(2, 9),
+            userId: session.userId,
+            service: formData.serviceType.split(' - ')[0],
+            date: formatDate(formData.workDate),
+            duration: formData.workDuration + ' Hari',
+            total: 'Rp ' + totalPrice.toLocaleString('id-ID'),
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+        
+        orders.push(newOrder);
+        localStorage.setItem('altherawork_orders', JSON.stringify(orders));
+    }
 }
 
 // File Upload
@@ -1096,14 +1123,67 @@ function updateUIAfterLogin(user) {
     if (loginBtn) loginBtn.style.display = 'none';
     if (userProfile) {
         userProfile.style.display = 'flex';
-        const avatar = userProfile.querySelector('.user-avatar');
-        if (avatar) {
-            avatar.textContent = user.name.charAt(0).toUpperCase();
+        
+        // Update avatar
+        if (user.avatar) {
+            updateAvatarInAllPages(user.avatar);
+        } else {
+            updateAvatarInAllPages(null);
         }
         
         const userName = userProfile.querySelector('.user-name');
         if (userName) {
             userName.textContent = user.name;
+        }
+    }
+}
+
+// Update avatar di semua halaman
+function updateAvatarInAllPages(avatarUrl) {
+    const headerAvatars = document.querySelectorAll('#headerAvatar, .user-avatar');
+    const profileAvatar = document.getElementById('profileAvatar');
+    
+    // Update header avatars
+    headerAvatars.forEach(avatar => {
+        if (avatarUrl) {
+            avatar.style.backgroundImage = `url(${avatarUrl})`;
+            avatar.innerHTML = '';
+        } else {
+            const session = JSON.parse(localStorage.getItem('altherawork_session') || 
+                                      sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                const user = users.find(u => u.id === session.userId);
+                if (user && user.name) {
+                    avatar.textContent = user.name.charAt(0).toUpperCase();
+                }
+            }
+            avatar.style.backgroundImage = 'none';
+        }
+    });
+    
+    // Update profile avatar
+    if (profileAvatar && avatarUrl) {
+        profileAvatar.style.backgroundImage = `url(${avatarUrl})`;
+        profileAvatar.innerHTML = '';
+        const avatarText = document.getElementById('avatarText');
+        if (avatarText) {
+            avatarText.style.display = 'none';
+        }
+    }
+}
+
+// Check and update avatar on page load
+function checkAndUpdateAvatar() {
+    const session = JSON.parse(localStorage.getItem('altherawork_session') || 
+                              sessionStorage.getItem('altherawork_session'));
+    
+    if (session) {
+        const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+        const user = users.find(u => u.id === session.userId);
+        
+        if (user && user.avatar) {
+            updateAvatarInAllPages(user.avatar);
         }
     }
 }
@@ -1122,51 +1202,12 @@ function logoutUser() {
     showNotification('Anda telah logout.', 'info');
     
     // Redirect to home if on dashboard
-    if (window.location.pathname.includes('dashboard.html')) {
+    if (window.location.pathname.includes('dashboard.html') || 
+        window.location.pathname.includes('profile.html') || 
+        window.location.pathname.includes('orders.html')) {
         setTimeout(() => {
             window.location.href = 'index.html';
         }, 1500);
-    }
-}
-
-// Initialize service selection when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('AltheraWork Website Loaded Successfully');
-
-    // Add subtle animation to all interactive elements
-    const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
-    interactiveElements.forEach(function(el) {
-        el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    });
-
-    // Initialize service selection
-    initializeServiceSelection();
-
-    // Profile and Orders Specific Functions
-
-// Update UI After Login dengan avatar support
-function updateUIAfterLogin(user) {
-    const loginBtn = document.getElementById('loginBtn');
-    const userProfile = document.querySelector('.user-profile');
-    const headerAvatar = document.getElementById('headerAvatar');
-    
-    if (loginBtn) loginBtn.style.display = 'none';
-    if (userProfile) {
-        userProfile.style.display = 'flex';
-        if (headerAvatar) {
-            if (user.avatar) {
-                headerAvatar.style.backgroundImage = `url(${user.avatar})`;
-                headerAvatar.innerHTML = '';
-            } else {
-                headerAvatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                headerAvatar.style.backgroundImage = 'none';
-            }
-        }
-        
-        const userName = userProfile.querySelector('.user-name');
-        if (userName) {
-            userName.textContent = user.name;
-        }
     }
 }
 
@@ -1186,16 +1227,6 @@ function loadUserProfile(userId) {
         
         if (profileName) profileName.textContent = user.name || 'User Name';
         if (profileEmail) profileEmail.textContent = user.email || 'user@email.com';
-        if (headerAvatar) {
-            if (user.avatar) {
-                headerAvatar.style.backgroundImage = `url(${user.avatar})`;
-                headerAvatar.innerHTML = '';
-            } else {
-                headerAvatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-                headerAvatar.style.backgroundImage = 'none';
-            }
-        }
-        if (avatarText) avatarText.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
         
         // Update form fields
         const fullName = document.getElementById('fullName');
@@ -1218,13 +1249,6 @@ function loadUserProfile(userId) {
         
         if (totalOrdersCount) totalOrdersCount.textContent = userOrders.length;
         if (memberSince) memberSince.textContent = new Date(user.registrationDate).getFullYear();
-
-        // Load avatar if exists
-        const profileAvatar = document.getElementById('profileAvatar');
-        if (profileAvatar && user.avatar) {
-            profileAvatar.style.backgroundImage = `url(${user.avatar})`;
-            profileAvatar.innerHTML = '';
-        }
 
         // Load preferences
         const emailNotifications = document.getElementById('emailNotifications');
@@ -1255,32 +1279,24 @@ function initializeAvatarUpload() {
 
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const profileAvatar = document.getElementById('profileAvatar');
-                        if (profileAvatar) {
-                            profileAvatar.style.backgroundImage = `url(${e.target.result})`;
-                            profileAvatar.innerHTML = '';
-
-                            // Save to user data
-                            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
-                                sessionStorage.getItem('altherawork_session'));
-                            if (session) {
-                                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
-                                const userIndex = users.findIndex(u => u.id === session.userId);
-                                if (userIndex !== -1) {
-                                    users[userIndex].avatar = e.target.result;
-                                    localStorage.setItem('altherawork_users', JSON.stringify(users));
-                                    
-                                    // Update header avatar
-                                    const headerAvatar = document.getElementById('headerAvatar');
-                                    if (headerAvatar) {
-                                        headerAvatar.style.backgroundImage = `url(${e.target.result})`;
-                                        headerAvatar.innerHTML = '';
-                                    }
-                                }
+                        const avatarUrl = e.target.result;
+                        
+                        // Save to user data
+                        const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                            sessionStorage.getItem('altherawork_session'));
+                        if (session) {
+                            const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                            const userIndex = users.findIndex(u => u.id === session.userId);
+                            if (userIndex !== -1) {
+                                users[userIndex].avatar = avatarUrl;
+                                localStorage.setItem('altherawork_users', JSON.stringify(users));
+                                
+                                // Update avatar di SEMUA halaman
+                                updateAvatarInAllPages(avatarUrl);
                             }
-
-                            showNotification('Foto profil berhasil diubah!', 'success');
                         }
+
+                        showNotification('Foto profil berhasil diubah!', 'success');
                     };
                     reader.readAsDataURL(file);
                 } else {
@@ -1879,5 +1895,18 @@ document.addEventListener('DOMContentLoaded', function() {
             initializeSearch();
         }
     }
+    
+    // Initialize service selection
+    initializeServiceSelection();
 });
+
+// Initialize service selection when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('AltheraWork Website Loaded Successfully');
+
+    // Add subtle animation to all interactive elements
+    const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
+    interactiveElements.forEach(function(el) {
+        el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    });
 });
