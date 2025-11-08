@@ -1908,5 +1908,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
     interactiveElements.forEach(function(el) {
         el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+        // Script untuk handle form height secara dinamis
+function adjustFormHeight() {
+    const bookingForm = document.querySelector('.booking-form');
+    const windowHeight = window.innerHeight;
+    const formOffset = bookingForm.getBoundingClientRect().top;
+    const availableHeight = windowHeight - formOffset - 40; // 40px margin
+    
+    if (availableHeight < 500) {
+        bookingForm.style.maxHeight = '500px';
+    } else {
+        bookingForm.style.maxHeight = availableHeight + 'px';
+    }
+}
+
+// Panggil saat load dan resize
+window.addEventListener('load', adjustFormHeight);
+window.addEventListener('resize', adjustFormHeight);
     });
 });
+
