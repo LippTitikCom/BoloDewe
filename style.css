@@ -204,7 +204,7 @@ header {
     padding: 10px 20px;
     color: black; 
     font-size: 0.9rem;
-    border: none;
+    border: black;
     cursor: pointer;
 }
 
@@ -2151,4 +2151,5 @@ textarea.form-control {
         padding: 1rem;
     }
 }
+
 
