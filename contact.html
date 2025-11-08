@@ -15,7 +15,7 @@
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
             <div class="loading-logo">
-                <i class="fas fa-hammer"></i>
+                <div class="logo-icon">A</div>
                 <h2>AltheraWork</h2>
             </div>
             <div class="loading-spinner"></div>
@@ -38,22 +38,117 @@
         <div class="container">
             <nav class="navbar">
                 <a href="index.html" class="logo">
-                    <i class="fas fa-hammer"></i>
+                    <div class="logo-icon">A</div>
                     <h1>AltheraWork</h1>
                 </a>
                 <ul class="nav-links">
                     <li><a href="index.html">Beranda</a></li>
-                    <li><a href="services.html">Layanan</a></li>
+                    <li><a href="service.html">Layanan</a></li>
                     <li><a href="about.html">Tentang Kami</a></li>
                     <li><a href="contact.html" class="active">Kontak</a></li>
                     <li><a href="booking.html" class="btn-booking">Pesan Sekarang</a></li>
                 </ul>
+
+                <!-- User Profile -->
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar">U</div>
+                    <span class="user-name">User</span>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button class="btn btn-secondary" id="loginBtn" style="margin-left: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+
                 <div class="mobile-menu">
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
         </div>
     </header>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <div class="modal-header">
+                <h3>Login ke AltheraWork</h3>
+                <button class="modal-close" id="closeLogin">&times;</button>
+            </div>
+            <div class="login-tabs">
+                <button class="login-tab active" data-tab="login">Login</button>
+                <button class="login-tab" data-tab="register">Daftar</button>
+            </div>
+
+            <div class="login-form">
+                <!-- Login Form -->
+                <div class="login-form-content" id="loginForm" style="display: block;">
+                    <form id="loginFormData">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required placeholder="Masukkan password">
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Ingat saya
+                            </label>
+                            <a href="#" class="forgot-password">Lupa password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div class="login-form-content" id="registerForm">
+                    <form id="registerFormData">
+                        <div class="form-group">
+                            <label for="registerName">Nama Lengkap</label>
+                            <input type="text" id="registerName" name="name" required placeholder="Masukkan nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" name="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Nomor Telepon</label>
+                            <input type="tel" id="registerPhone" name="phone" required placeholder="+62 812-3456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" name="password" required placeholder="Minimal 6 karakter">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Konfirmasi Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Ulangi password">
+                        </div>
+                        <div class="form-agreement">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="registerAgree" required>
+                                <span class="checkmark"></span>
+                                Saya menyetujui <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-user-plus"></i> Daftar Sekarang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Page Header -->
     <section class="page-header">
@@ -85,7 +180,7 @@
                         </div>
                         <div class="contact-details">
                             <h4>Telepon/WhatsApp</h4>
-                            <p>+628123582539 (Primary)<br>+62 813-4567-8901 (Alternate)<br>24/7 Customer Service</p>
+                            <p>+62 812-3582-5391 (Primary)<br>+62 813-4567-8901 (Alternate)<br>24/7 Customer Service</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -94,7 +189,7 @@
                         </div>
                         <div class="contact-details">
                             <h4>Email</h4>
-                            <p>info@powerwork.id<br>booking@powerwork.id<br>support@powerwork.id</p>
+                            <p>info@altherawork.id<br>booking@altherawork.id<br>support@altherawork.id</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -220,7 +315,7 @@
             </div>
             <div class="faq-grid">
                 <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Bagaimana cara memesan layanan PowerWork?</h3>
+                    <h3>Bagaimana cara memesan layanan AltheraWork?</h3>
                     <p>Anda dapat memesan melalui website dengan mengisi form pemesanan, menghubungi WhatsApp kami, atau datang langsung ke kantor. Prosesnya cepat dan mudah!</p>
                 </div>
                 <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
@@ -263,7 +358,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="logo">
-                        <i class="fas fa-hammer"></i>
+                        <div class="logo-icon">A</div>
                         <h2>AltheraWork</h2>
                     </div>
                     <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
@@ -277,11 +372,11 @@
                 <div class="footer-section">
                     <h3>Layanan Kami</h3>
                     <ul>
-                        <li><a href="services.html">Pekerjaan Rumah Tangga</a></li>
-                        <li><a href="services.html">Pindahan & Pengangkutan</a></li>
-                        <li><a href="services.html">Konstruksi Ringan</a></li>
-                        <li><a href="services.html">Bongkar Pasang</a></li>
-                        <li><a href="services.html">Landscaping</a></li>
+                        <li><a href="service.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="service.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="service.html">Konstruksi Ringan</a></li>
+                        <li><a href="service.html">Bongkar Pasang</a></li>
+                        <li><a href="service.html">Landscaping</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -298,8 +393,8 @@
                     <h3>Kontak</h3>
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
-                        <li><i class="fas fa-phone"></i> +628123582539</li>
-                        <li><i class="fas fa-envelope"></i> info@powerwork.id</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3582-5391</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
                         <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
                     </ul>
                 </div>
