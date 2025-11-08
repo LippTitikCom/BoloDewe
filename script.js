@@ -245,8 +245,8 @@ function showServiceModal(service, price) {
 
 // Send Service Inquiry to WhatsApp
 function sendServiceInquiry(service, price) {
-    const message = `Halo AltheraWork, saya tertarik dengan layanan ${service} dengan harga ${price}/hari. Bisa info lebih lanjut?`;
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const message = Halo AltheraWork, saya tertarik dengan layanan ${service} dengan harga ${price}/hari. Bisa info lebih lanjut?;
+    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
     window.open(whatsappUrl, '_blank');
 
     showNotification('Membuka WhatsApp... Silakan lanjutkan percakapan dengan tim kami.', 'success');
@@ -293,18 +293,18 @@ function initializeContactForm() {
 function sendContactToWhatsApp(name, email, phone, service, message) {
     const whatsappMessage = `Halo AltheraWork, saya ${name} ingin konsultasi mengenai layanan:
 
-📋 *DATA KONTAK*
+📋 DATA KONTAK
 • Nama: ${name}
 • Email: ${email}
 • Telepon: ${phone}
 • Layanan: ${service}
 
-💬 *PESAN*
+💬 PESAN
 ${message}
 
 Mohon info lebih lanjut dan penawaran harganya. Terima kasih.`;
 
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)};
     window.open(whatsappUrl, '_blank');
 
     showNotification('Form berhasil dikirim! Membuka WhatsApp...', 'success');
@@ -385,7 +385,7 @@ function updateBookingSummary() {
         }
     }
 
-    if (summaryDuration) summaryDuration.textContent = workDuration ? `${workDuration.value} Hari` : '-';
+    if (summaryDuration) summaryDuration.textContent = workDuration ? ${workDuration.value} Hari : '-';
     if (summaryDate) summaryDate.textContent = workDate ? formatDate(workDate.value) : '-';
 
     if (summaryTime && workTime) {
@@ -397,8 +397,8 @@ function updateBookingSummary() {
     const price = getServicePrice(serviceType ? serviceType.value : '');
     const total = price * parseInt(workDuration ? workDuration.value : 0);
 
-    if (summaryPrice) summaryPrice.textContent = price ? `Rp ${price.toLocaleString('id-ID')}` : '-';
-    if (summaryTotal) summaryTotal.textContent = total ? `Rp ${total.toLocaleString('id-ID')}` : 'Rp 0';
+    if (summaryPrice) summaryPrice.textContent = price ? Rp ${price.toLocaleString('id-ID')} : '-';
+    if (summaryTotal) summaryTotal.textContent = total ? Rp ${total.toLocaleString('id-ID')} : 'Rp 0';
 }
 
 // Get Service Price from selection
@@ -441,7 +441,7 @@ function validateBookingForm() {
         const field = document.getElementById(fieldName);
         if (!field || !field.value.trim()) {
             const label = field && field.labels && field.labels[0] ? field.labels[0].textContent : fieldName;
-            showNotification(`Harap lengkapi field ${label}`, 'error');
+            showNotification(Harap lengkapi field ${label}, 'error');
             if (field) field.focus();
             return false;
         }
@@ -582,27 +582,27 @@ function showBookingModal(formData) {
 function sendBookingToWhatsApp(formData, totalPrice) {
     const message = `Halo AltheraWork, saya ingin memesan layanan dengan detail berikut:
 
-📋 *DATA PEMESANAN*
+📋 DATA PEMESANAN
 • Nama: ${formData.fullName}
 • Telepon: ${formData.phone}
-${formData.email ? `• Email: ${formData.email}\n` : ''}
+${formData.email ? • Email: ${formData.email}\n : ''}
 • Jenis Identitas: ${formData.identityType}
 • Nomor Identitas: ${formData.identityNumber}
 • Alamat: ${formData.address}
 
-🛠️ *DETAIL LAYANAN*
+🛠 DETAIL LAYANAN
 • Layanan: ${formData.serviceType.split(' - ')[0]}
 • Tanggal: ${formatDate(formData.workDate)}
 • Durasi: ${formData.workDuration} Hari
-${formData.workTime ? `• Waktu: ${formData.workTime}\n` : ''}
+${formData.workTime ? • Waktu: ${formData.workTime}\n : ''}
 • Lokasi: ${formData.workAddress}
-${formData.specialRequest ? `• Permintaan Khusus: ${formData.specialRequest}\n` : ''}
-💵 *RINCIAN BIAYA*
+${formData.specialRequest ? • Permintaan Khusus: ${formData.specialRequest}\n : ''}
+💵 RINCIAN BIAYA
 • Total Biaya: Rp ${totalPrice.toLocaleString('id-ID')}
 
 Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku. Terima kasih.`;
 
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
     window.open(whatsappUrl, '_blank');
 
     showNotification('Pesanan berhasil! Silakan lanjutkan konfirmasi via WhatsApp.', 'success');
@@ -729,7 +729,7 @@ function handleFileSelection(file) {
 
 // General WhatsApp Message
 function sendWhatsAppMessage(message) {
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
     window.open(whatsappUrl, '_blank');
 }
 
@@ -745,7 +745,7 @@ function showNotification(message, type) {
 
     // Create notification element
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
+    notification.className = notification notification-${type};
     notification.innerHTML = `
         <div class="notification-content">
             <i class="fas ${getNotificationIcon(type)}"></i>
@@ -850,7 +850,7 @@ function initializeServiceSelection() {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const service = this.getAttribute('data-service');
-            window.location.href = `booking.html?service=${service}`;
+            window.location.href = booking.html?service=${service};
         });
     });
 }
@@ -898,7 +898,7 @@ function initializeLoginSystem() {
             loginForms.forEach(form => {
                 form.style.display = 'none';
             });
-            document.getElementById(`${target}Form`).style.display = 'block';
+            document.getElementById(${target}Form).style.display = 'block';
         });
     });
     
@@ -1146,7 +1146,7 @@ function updateAvatarInAllPages(avatarUrl) {
     // Update header avatars
     headerAvatars.forEach(avatar => {
         if (avatarUrl) {
-            avatar.style.backgroundImage = `url(${avatarUrl})`;
+            avatar.style.backgroundImage = url(${avatarUrl});
             avatar.innerHTML = '';
         } else {
             const session = JSON.parse(localStorage.getItem('altherawork_session') || 
@@ -1164,7 +1164,7 @@ function updateAvatarInAllPages(avatarUrl) {
     
     // Update profile avatar
     if (profileAvatar && avatarUrl) {
-        profileAvatar.style.backgroundImage = `url(${avatarUrl})`;
+        profileAvatar.style.backgroundImage = url(${avatarUrl});
         profileAvatar.innerHTML = '';
         const avatarText = document.getElementById('avatarText');
         if (avatarText) {
@@ -1569,7 +1569,7 @@ function displayOrders(orders, filteredOrders = null) {
         }
 
         for (let i = 1; i <= totalPages; i++) {
-            paginationHTML += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+            paginationHTML += <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>;
         }
 
         if (currentPage < totalPages) {
@@ -1775,256 +1775,5 @@ function viewOrderDetail(orderId) {
         const whatsappSupportBtn = document.getElementById('whatsappSupportBtn');
         if (whatsappSupportBtn) {
             whatsappSupportBtn.onclick = function() {
-                const message = `Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id}`;
-                const whatsappUrl = `https://wa.me/6281235825391?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
-            };
-        }
-    }
-}
-
-function closeOrderDetailModal() {
-    const modal = document.getElementById('orderDetailModal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
-}
-
-function cancelOrder(orderId) {
-    if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
-        const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
-        const orderIndex = orders.findIndex(o => o.id === orderId);
-        
-        if (orderIndex !== -1) {
-            orders.splice(orderIndex, 1);
-            localStorage.setItem('altherawork_orders', JSON.stringify(orders));
-            
-            showNotification('Pesanan berhasil dibatalkan!', 'success');
-            
-            // Reload orders
-            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
-                sessionStorage.getItem('altherawork_session'));
-            if (session) {
-                loadUserOrders(session.userId);
-            }
-        }
-    }
-}
-
-function reorder(orderId) {
-    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
-    const order = orders.find(o => o.id === orderId);
-    
-    if (order) {
-        // Redirect to booking page with service pre-selected
-        const serviceMap = {
-            'Pekerjaan Rumah Tangga': 'rumah-tangga',
-            'Pindahan & Pengangkutan': 'pindahan',
-            'Konstruksi Ringan': 'konstruksi',
-            'Bongkar Pasang': 'bongkar-pasang',
-            'Landscaping': 'landscaping',
-            'Layanan Khusus': 'khusus'
-        };
-        
-        const serviceKey = Object.keys(serviceMap).find(key => order.service.includes(key));
-        if (serviceKey) {
-            window.location.href = `booking.html?service=${serviceMap[serviceKey]}`;
-        } else {
-            window.location.href = 'booking.html';
-        }
-    }
-}
-
-// Initialize profile and orders when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on profile page
-    if (document.getElementById('personalInfoForm')) {
-        const session = JSON.parse(localStorage.getItem('altherawork_session') ||
-            sessionStorage.getItem('altherawork_session'));
-
-        if (session) {
-            loadUserProfile(session.userId);
-            initializeAvatarUpload();
-            
-            // Add form submission handler
-            document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const session = JSON.parse(localStorage.getItem('altherawork_session') ||
-                    sessionStorage.getItem('altherawork_session'));
-
-                if (session) {
-                    const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
-                    const userIndex = users.findIndex(u => u.id === session.userId);
-                    
-                    if (userIndex !== -1) {
-                        users[userIndex].name = document.getElementById('fullName').value;
-                        users[userIndex].phone = document.getElementById('phoneNumber').value;
-                        users[userIndex].address = document.getElementById('address').value;
-                        users[userIndex].identityType = document.getElementById('identityType').value;
-                        users[userIndex].identityNumber = document.getElementById('identityNumber').value;
-                        
-                        localStorage.setItem('altherawork_users', JSON.stringify(users));
-                        
-                        // Update displayed name
-                        document.getElementById('profileName').textContent = users[userIndex].name;
-                        const headerAvatar = document.getElementById('headerAvatar');
-                        if (headerAvatar && !users[userIndex].avatar) {
-                            headerAvatar.textContent = users[userIndex].name.charAt(0).toUpperCase();
-                        }
-                        const avatarText = document.getElementById('avatarText');
-                        if (avatarText) {
-                            avatarText.textContent = users[userIndex].name.charAt(0).toUpperCase();
-                        }
-                        
-                        showNotification('Profil berhasil diperbarui!', 'success');
-                    }
-                }
-            });
-        }
-    }
-    
-    // Check if we're on orders page
-    if (document.getElementById('ordersList')) {
-        const session = JSON.parse(localStorage.getItem('altherawork_session') ||
-            sessionStorage.getItem('altherawork_session'));
-
-        if (session) {
-            loadUserOrders(session.userId);
-            initializeFilters();
-            initializeSearch();
-        }
-    }
-    
-    // Initialize service selection
-    initializeServiceSelection();
-});
-
-// Initialize service selection when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('AltheraWork Website Loaded Successfully');
-
-    // Add subtle animation to all interactive elements
-    const interactiveElements = document.querySelectorAll('.btn, .service-card, .testimonial-card, .contact-item, .social-icons a, .feature-card');
-    interactiveElements.forEach(function(el) {
-        el.style.transition = 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-        // Script untuk handle form height secara dinamis
-function adjustFormHeight() {
-    const bookingForm = document.querySelector('.booking-form');
-    const windowHeight = window.innerHeight;
-    const formOffset = bookingForm.getBoundingClientRect().top;
-    const availableHeight = windowHeight - formOffset - 40; // 40px margin
-    
-    if (availableHeight < 500) {
-        bookingForm.style.maxHeight = '500px';
-    } else {
-        bookingForm.style.maxHeight = availableHeight + 'px';
-    }
-}
-
-// Panggil saat load dan resize
-window.addEventListener('load', adjustFormHeight);
-window.addEventListener('resize', adjustFormHeight);
-    });
-});
-
-// Handle form booking scroll dan loading
-document.addEventListener('DOMContentLoaded', function() {
-    // Sembunyikan loading screen setelah halaman siap
-    setTimeout(() => {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.style.display = 'none';
-        }
-    }, 1000);
-
-    // Adjust form height berdasarkan viewport
-    function adjustBookingForm() {
-        const bookingForm = document.querySelector('.booking-form');
-        const bookingSummary = document.querySelector('.booking-summary');
-        
-        if (bookingForm && window.innerHeight < 800) {
-            const viewportHeight = window.innerHeight;
-            const formTop = bookingForm.getBoundingClientRect().top;
-            const margin = 20;
-            const maxHeight = viewportHeight - formTop - margin;
-            
-            bookingForm.style.maxHeight = Math.max(400, maxHeight) + 'px';
-        }
-        
-        // Adjust summary position untuk layar kecil
-        if (bookingSummary && window.innerWidth < 992) {
-            bookingSummary.style.position = 'static';
-        }
-    }
-
-    // Panggil saat load dan resize
-    adjustBookingForm();
-    window.addEventListener('resize', adjustBookingForm);
-
-    // Smooth scroll untuk form yang panjang
-    const formSections = document.querySelectorAll('.form-section');
-    formSections.forEach(section => {
-        section.addEventListener('click', function(e) {
-            if (e.target.tagName === 'H3') {
-                this.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // Validasi form sebelum submit
-    const bookingForm = document.getElementById('bookingForm');
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validasi field required
-            const requiredFields = this.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = '#e74c3c';
-                } else {
-                    field.style.borderColor = '';
-                }
-            });
-            
-            // Validasi checkbox
-            const agreeTerms = document.getElementById('agreeTerms');
-            const agreeData = document.getElementById('agreeData');
-            
-            if (!agreeTerms.checked || !agreeData.checked) {
-                isValid = false;
-                alert('Harap menyetujui syarat dan ketentuan serta persetujuan pengolahan data.');
-            }
-            
-            if (isValid) {
-                // Kirim ke WhatsApp
-                sendToWhatsApp();
-            } else {
-                alert('Harap lengkapi semua field yang wajib diisi!');
-            }
-        });
-    }
-
-    function sendToWhatsApp() {
-        const phone = '6281235825391';
-        const service = document.getElementById('serviceType').value;
-        const date = document.getElementById('workDate').value;
-        const duration = document.getElementById('workDuration').value;
-        const name = document.getElementById('fullName').value;
-        
-        const message = `Halo AltheraWork, saya ${name} ingin memesan layanan:\n\n` +
-                       `📋 Layanan: ${service}\n` +
-                       `📅 Tanggal: ${date}\n` +
-                       `⏱️ Durasi: ${duration} hari\n\n` +
-                       `Saya telah mengisi form pemesanan di website.`;
-        
-        const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappURL, '_blank');
-    }
-});
-
+                const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
+                const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
