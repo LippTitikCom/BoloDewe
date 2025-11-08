@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan Saya - AltheraWork</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-icon">A</div>
+                <h2>AltheraWork</h2>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Memuat Riwayat Pesanan...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <h1>AltheraWork</h1>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="service.html">Layanan</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                    <li><a href="booking.html" class="btn-booking">Pesan Layanan</a></li>
+                </ul>
+                <div class="user-profile" style="display: none;">
+                    <div class="user-avatar" id="headerAvatar">U</div>
+                    <div class="user-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user"></i> Profil Saya</a>
+                        <a href="orders.html"><i class="fas fa-clipboard-list"></i> Pesanan Saya</a>
+                        <a href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Orders Content -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-header" data-aos="fade-up">
+                <h1>Pesanan Saya</h1>
+                <p>Lihat dan kelola semua pesanan Anda di sini</p>
+            </div>
+
+            <div class="orders-container">
+                <div class="orders-filters" data-aos="fade-up" data-aos-delay="200">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Semua Pesanan</button>
+                        <button class="filter-btn" data-filter="pending">Menunggu Konfirmasi</button>
+                        <button class="filter-btn" data-filter="processing">Dalam Proses</button>
+                        <button class="filter-btn" data-filter="completed">Selesai</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="orderSearch" placeholder="Cari pesanan...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class="orders-stats" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card">
+                        <div class="stat-icon pending">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="pendingCount">0</span>
+                            <span class="stat-label">Menunggu</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon processing">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="processingCount">0</span>
+                            <span class="stat-label">Diproses</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="completedCount">0</span>
+                            <span class="stat-label">Selesai</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon total">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalCount">0</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orders-list" id="ordersList" data-aos="fade-up" data-aos-delay="600">
+                    <!-- Orders will be populated by JavaScript -->
+                    <div class="no-orders">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Belum Ada Pesanan</h3>
+                        <p>Anda belum memiliki pesanan. Mulai pesan layanan kami sekarang!</p>
+                        <a href="booking.html" class="btn btn-primary">Pesan Layanan</a>
+                    </div>
+                </div>
+
+                <div class="orders-pagination" id="ordersPagination" data-aos="fade-up" data-aos-delay="800">
+                    <!-- Pagination will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Detail Modal -->
+    <div class="whatsapp-modal" id="orderDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detail Pesanan</h3>
+                <button class="modal-close" onclick="closeOrderDetailModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderDetailContent">
+                    <!-- Order details will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeOrderDetailModal()">Tutup</button>
+                <button class="btn btn-primary" id="whatsappSupportBtn">
+                    <i class="fab fa-whatsapp"></i> Hubungi Support
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <h2>AltheraWork</h2>
+                    </div>
+                    <p>Penyedia jasa tenaga harian profesional untuk berbagai kebutuhan fisik Anda dengan kualitas terbaik, harga terjangkau, dan kepuasan terjamin.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li><a href="service.html">Pekerjaan Rumah Tangga</a></li>
+                        <li><a href="service.html">Pindahan & Pengangkutan</a></li>
+                        <li><a href="service.html">Konstruksi Ringan</a></li>
+                        <li><a href="service.html">Bongkar Pasang</a></li>
+                        <li><a href="service.html">Landscaping</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Perusahaan</h3>
+                    <ul>
+                        <li><a href="about.html">Tentang Kami</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="contact.html">Kontak</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Jakarta, Indonesia</li>
+                        <li><i class="fas fa-phone"></i> +62 812-3582-5391</li>
+                        <li><i class="fas fa-envelope"></i> info@altherawork.id</li>
+                        <li><i class="fas fa-clock"></i> 07:00 - 20:00 WIB</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AltheraWork. All rights reserved. | Developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for your convenience</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Orders-specific functionality
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const ordersPerPage = 5;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Load user orders
+            loadUserOrders(session.userId);
+
+            // Initialize filters
+            initializeFilters();
+
+            // Initialize search
+            initializeSearch();
+        });
+
+        function loadUserOrders(userId) {
+            const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+            const userOrders = orders.filter(order => order.userId === userId);
+
+            // Update stats
+            updateOrderStats(userOrders);
+
+            // Display orders
+            displayOrders(userOrders);
+        }
+
+        function updateOrderStats(orders) {
+            const pendingCount = orders.filter(o => o.status === 'pending').length;
+            const processingCount = orders.filter(o => o.status === 'processing').length;
+            const completedCount = orders.filter(o => o.status === 'completed').length;
+            const totalCount = orders.length;
+
+            document.getElementById('pendingCount').textContent = pendingCount;
+            document.getElementById('processingCount').textContent = processingCount;
+            document.getElementById('completedCount').textContent = completedCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+
+        function displayOrders(orders, filteredOrders = null) {
+            const ordersToDisplay = filteredOrders || orders;
+            const ordersList = document.getElementById('ordersList');
+            const pagination = document.getElementById('ordersPagination');
+
+            if (ordersToDisplay.length === 0) {
+                ordersList.innerHTML = `
+                    <div class="no-orders">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Belum Ada Pesanan</h3>
+                        <p>Anda belum memiliki pesanan. Mulai pesan layanan kami sekarang!</p>
+                        <a href="booking.html" class="btn btn-primary">Pesan Layanan</a>
+                    </div>
+                `;
+                pagination.innerHTML = '';
+                return;
+            }
+
+            // Apply filter
+            let filtered = ordersToDisplay;
+            if (currentFilter !== 'all') {
+                filtered = ordersToDisplay.filter(order => order.status === currentFilter);
+            }
+
+            // Apply pagination
+            const totalPages = Math.ceil(filtered.length / ordersPerPage);
+            const startIndex = (currentPage - 1) * ordersPerPage;
+            const paginatedOrders = filtered.slice(startIndex, startIndex + ordersPerPage);
+
+            let ordersHTML = '';
+            paginatedOrders.forEach(order => {
+                        let statusClass = '';
+                        let statusText = '';
+                        let statusIcon = '';
+
+                        switch (order.status) {
+                            case 'pending':
+                                statusClass = 'status-pending';
+                                statusText = 'Menunggu Konfirmasi';
+                                statusIcon = 'fas fa-clock';
+                                break;
+                            case 'processing':
+                                statusClass = 'status-processing';
+                                statusText = 'Dalam Proses';
+                                statusIcon = 'fas fa-tools';
+                                break;
+                            case 'completed':
+                                statusClass = 'status-completed';
+                                statusText = 'Selesai';
+                                statusIcon = 'fas fa-check-circle';
+                                break;
+                        }
+
+                        ordersHTML += `
+                    <div class="order-card" data-order-id="${order.id}">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h4>${order.service}</h4>
+                                <p>Order ID: ${order.id}</p>
+                            </div>
+                            <div class="order-status ${statusClass}">
+                                <i class="${statusIcon}"></i>
+                                ${statusText}
+                            </div>
+                        </div>
+                        <div class="order-details">
+                            <div class="order-detail">
+                                <span class="detail-label">Tanggal:</span>
+                                <span class="detail-value">${order.date}</span>
+                            </div>
+                            <div class="order-detail">
+                                <span class="detail-label">Durasi:</span>
+                                <span class="detail-value">${order.duration} hari</span>
+                            </div>
+                            <div class="order-detail">
+                                <span class="detail-label">Total:</span>
+                                <span class="detail-value price">${order.total}</span>
+                            </div>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-outline" onclick="viewOrderDetail('${order.id}')">
+                                <i class="fas fa-eye"></i> Lihat Detail
+                            </button>
+                            ${order.status === 'pending' ? `
+                                <button class="btn btn-secondary" onclick="cancelOrder('${order.id}')">
+                                    <i class="fas fa-times"></i> Batalkan
+                                </button>
+                            ` : ''}
+                            ${order.status === 'completed' ? `
+                                <button class="btn btn-primary" onclick="reorder('${order.id}')">
+                                    <i class="fas fa-redo"></i> Pesan Lagi
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            ordersList.innerHTML = ordersHTML;
+
+            // Generate pagination
+            if (totalPages > 1) {
+                let paginationHTML = '';
+                
+                if (currentPage > 1) {
+                    paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage - 1})">
+                        <i class="fas fa-chevron-left"></i> Sebelumnya
+                    </button>`;
+                }
+
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                }
+
+                if (currentPage < totalPages) {
+                    paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage + 1})">
+                        Selanjutnya <i class="fas fa-chevron-right"></i>
+                    </button>`;
+                }
+
+                pagination.innerHTML = paginationHTML;
+            } else {
+                pagination.innerHTML = '';
+            }
+        }
+
+        function initializeFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    currentFilter = this.getAttribute('data-filter');
+                    currentPage = 1;
+                    
+                    const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                        sessionStorage.getItem('altherawork_session'));
+                    if (session) {
+                        loadUserOrders(session.userId);
+                    }
+                });
+            });
+        }
+
+        function initializeSearch() {
+            const searchInput = document.getElementById('orderSearch');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                    sessionStorage.getItem('altherawork_session'));
+                if (session) {
+                    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+                    const userOrders = orders.filter(order => order.userId === session.userId);
+                    
+                    const filteredOrders = userOrders.filter(order => 
+                        order.service.toLowerCase().includes(searchTerm) ||
+                        order.id.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    displayOrders(userOrders, filteredOrders);
+                }
+            });
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                loadUserOrders(session.userId);
+            }
+        }
+
+        function viewOrderDetail(orderId) {
+            const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+            const order = orders.find(o => o.id === orderId);
+            
+            if (order) {
+                let statusClass = '';
+                let statusText = '';
+                let statusIcon = '';
+
+                switch (order.status) {
+                    case 'pending':
+                        statusClass = 'status-pending';
+                        statusText = 'Menunggu Konfirmasi';
+                        statusIcon = 'fas fa-clock';
+                        break;
+                    case 'processing':
+                        statusClass = 'status-processing';
+                        statusText = 'Dalam Proses';
+                        statusIcon = 'fas fa-tools';
+                        break;
+                    case 'completed':
+                        statusClass = 'status-completed';
+                        statusText = 'Selesai';
+                        statusIcon = 'fas fa-check-circle';
+                        break;
+                }
+
+                const detailHTML = `
+                    <div class="order-detail-view">
+                        <div class="detail-section">
+                            <h4>Informasi Pesanan</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Order ID:</span>
+                                    <span class="detail-value">${order.id}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Layanan:</span>
+                                    <span class="detail-value">${order.service}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tanggal:</span>
+                                    <span class="detail-value">${order.date}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Durasi:</span>
+                                    <span class="detail-value">${order.duration} hari</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status:</span>
+                                    <span class="detail-value ${statusClass}">
+                                        <i class="${statusIcon}"></i> ${statusText}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h4>Detail Pembayaran</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Total Biaya:</span>
+                                    <span class="detail-value price">${order.total}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Metode Pembayaran:</span>
+                                    <span class="detail-value">Transfer Bank</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status Pembayaran:</span>
+                                    <span class="detail-value status-completed">
+                                        <i class="fas fa-check-circle"></i> Lunas
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${order.worker ? `
+                        <div class="detail-section">
+                            <h4>Tenaga Kerja</h4>
+                            <div class="worker-info">
+                                <div class="worker-avatar">
+                                    ${order.worker.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div class="worker-details">
+                                    <h5>${order.worker.name}</h5>
+                                    <p>${order.worker.specialization}</p>
+                                    <div class="worker-rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>${order.worker.rating}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="detail-section">
+                            <h4>Timeline Pesanan</h4>
+                            <div class="timeline">
+                                <div class="timeline-item ${order.status === 'pending' || order.status === 'processing' || order.status === 'completed' ? 'active' : ''}">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Pesanan Dibuat</h5>
+                                        <p>${order.date}</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item ${order.status === 'processing' || order.status === 'completed' ? 'active' : ''}">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Pesanan Dikonfirmasi</h5>
+                                        <p>${order.confirmedDate || 'Menunggu konfirmasi'}</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item ${order.status === 'completed' ? 'active' : ''}">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Pekerjaan Selesai</h5>
+                                        <p>${order.completedDate || 'Dalam proses'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('orderDetailContent').innerHTML = detailHTML;
+                document.getElementById('orderDetailModal').classList.add('active');
+                
+                // Set WhatsApp support button
+                document.getElementById('whatsappSupportBtn').onclick = function() {
+                    const message = `Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id}`;
+                    const whatsappUrl = `https://wa.me/6281235825391?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                };
+            }
+        }
+
+        function closeOrderDetailModal() {
+            document.getElementById('orderDetailModal').classList.remove('active');
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+                const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+                const orderIndex = orders.findIndex(o => o.id === orderId);
+                
+                if (orderIndex !== -1) {
+                    orders.splice(orderIndex, 1);
+                    localStorage.setItem('altherawork_orders', JSON.stringify(orders));
+                    
+                    showNotification('Pesanan berhasil dibatalkan!', 'success');
+                    
+                    // Reload orders
+                    const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                        sessionStorage.getItem('altherawork_session'));
+                    if (session) {
+                        loadUserOrders(session.userId);
+                    }
+                }
+            }
+        }
+
+        function reorder(orderId) {
+            const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+            const order = orders.find(o => o.id === orderId);
+            
+            if (order) {
+                // Redirect to booking page with service pre-selected
+                const serviceMap = {
+                    'Pekerjaan Rumah Tangga': 'rumah-tangga',
+                    'Pindahan & Pengangkutan': 'pindahan',
+                    'Konstruksi Ringan': 'konstruksi',
+                    'Bongkar Pasang': 'bongkar-pasang',
+                    'Landscaping': 'landscaping',
+                    'Layanan Khusus': 'khusus'
+                };
+                
+                const serviceKey = Object.keys(serviceMap).find(key => order.service.includes(key));
+                if (serviceKey) {
+                    window.location.href = `booking.html?service=${serviceMap[serviceKey]}`;
+                } else {
+                    window.location.href = 'booking.html';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
