@@ -3039,6 +3039,188 @@ input:checked + .slider:before {
     text-align: center;
 }
 
+/* PERBAIKAN SCROLL FORM BOOKING */
+.booking-container {
+    display: flex;
+    gap: 30px;
+    margin: 40px 0;
+    align-items: flex-start;
+}
+
+.booking-form {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 75vh; /* Diperkecil dari 80vh */
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Styling scrollbar yang lebih baik */
+.booking-form::-webkit-scrollbar {
+    width: 8px;
+}
+
+.booking-form::-webkit-scrollbar-track {
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.booking-form::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 10px;
+}
+
+.booking-form::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+/* Form sections lebih kompak */
+.form-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.form-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Diperkecil dari 20px */
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+/* Input fields lebih kompak */
+input, select, textarea {
+    padding: 10px 12px; /* Diperkecil dari 12px 15px */
+    font-size: 0.95rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px; /* Diperkecil dari 100px */
+}
+
+/* Upload area lebih kecil */
+.upload-area {
+    padding: 20px; /* Diperkecil dari 30px */
+}
+
+.upload-area i {
+    font-size: 1.5rem; /* Diperkecil dari 2rem */
+    margin-bottom: 8px;
+}
+
+/* Tombol lebih kompak */
+.btn-large {
+    padding: 12px 20px; /* Diperkecil dari 15px */
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Summary section */
+.booking-summary {
+    flex: 0 0 320px; /* Diperkecil dari 350px */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: sticky;
+    top: 90px;
+    height: fit-content;
+}
+
+.summary-card, .booking-info, .support-info {
+    padding: 20px; /* Diperkecil dari 25px */
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .booking-form {
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 992px) {
+    .booking-container {
+        flex-direction: column;
+    }
+    
+    .booking-form {
+        max-height: none;
+        overflow-y: visible;
+        margin-bottom: 20px;
+    }
+    
+    .booking-summary {
+        position: static;
+        flex: 1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-form {
+        padding: 20px;
+        max-height: none;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .form-section h3 {
+        font-size: 1rem;
+    }
+    
+    .booking-summary {
+        flex: 0 0 auto;
+    }
+}
+
+/* Untuk layar yang sangat pendek */
+@media (max-height: 700px) {
+    .booking-form {
+        max-height: 65vh;
+    }
+}
+
+@media (max-height: 600px) {
+    .booking-form {
+        max-height: 60vh;
+    }
+}
+
+/* Pastikan header tidak menutupi konten */
+.page-header {
+    padding: 100px 0 40px;
+    margin-top: 70px;
+}
+
+/* Loading screen adjustment */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 
 
