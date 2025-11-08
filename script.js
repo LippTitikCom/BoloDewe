@@ -1141,4 +1141,743 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize service selection
     initializeServiceSelection();
+
+    // Profile and Orders Specific Functions
+
+// Update UI After Login dengan avatar support
+function updateUIAfterLogin(user) {
+    const loginBtn = document.getElementById('loginBtn');
+    const userProfile = document.querySelector('.user-profile');
+    const headerAvatar = document.getElementById('headerAvatar');
+    
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (userProfile) {
+        userProfile.style.display = 'flex';
+        if (headerAvatar) {
+            if (user.avatar) {
+                headerAvatar.style.backgroundImage = `url(${user.avatar})`;
+                headerAvatar.innerHTML = '';
+            } else {
+                headerAvatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                headerAvatar.style.backgroundImage = 'none';
+            }
+        }
+        
+        const userName = userProfile.querySelector('.user-name');
+        if (userName) {
+            userName.textContent = user.name;
+        }
+    }
+}
+
+// Profile Management Functions
+function loadUserProfile(userId) {
+    const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+    const user = users.find(u => u.id === userId);
+    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+    const userOrders = orders.filter(order => order.userId === userId);
+
+    if (user) {
+        // Update profile information
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+        const headerAvatar = document.getElementById('headerAvatar');
+        const avatarText = document.getElementById('avatarText');
+        
+        if (profileName) profileName.textContent = user.name || 'User Name';
+        if (profileEmail) profileEmail.textContent = user.email || 'user@email.com';
+        if (headerAvatar) {
+            if (user.avatar) {
+                headerAvatar.style.backgroundImage = `url(${user.avatar})`;
+                headerAvatar.innerHTML = '';
+            } else {
+                headerAvatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+                headerAvatar.style.backgroundImage = 'none';
+            }
+        }
+        if (avatarText) avatarText.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+        
+        // Update form fields
+        const fullName = document.getElementById('fullName');
+        const phoneNumber = document.getElementById('phoneNumber');
+        const email = document.getElementById('email');
+        const address = document.getElementById('address');
+        const identityType = document.getElementById('identityType');
+        const identityNumber = document.getElementById('identityNumber');
+        
+        if (fullName) fullName.value = user.name || '';
+        if (phoneNumber) phoneNumber.value = user.phone || '';
+        if (email) email.value = user.email || '';
+        if (address) address.value = user.address || '';
+        if (identityType) identityType.value = user.identityType || '';
+        if (identityNumber) identityNumber.value = user.identityNumber || '';
+
+        // Update stats
+        const totalOrdersCount = document.getElementById('totalOrdersCount');
+        const memberSince = document.getElementById('memberSince');
+        
+        if (totalOrdersCount) totalOrdersCount.textContent = userOrders.length;
+        if (memberSince) memberSince.textContent = new Date(user.registrationDate).getFullYear();
+
+        // Load avatar if exists
+        const profileAvatar = document.getElementById('profileAvatar');
+        if (profileAvatar && user.avatar) {
+            profileAvatar.style.backgroundImage = `url(${user.avatar})`;
+            profileAvatar.innerHTML = '';
+        }
+
+        // Load preferences
+        const emailNotifications = document.getElementById('emailNotifications');
+        const whatsappNotifications = document.getElementById('whatsappNotifications');
+        const languagePreference = document.getElementById('languagePreference');
+        const themePreference = document.getElementById('themePreference');
+        
+        if (user.preferences) {
+            if (emailNotifications) emailNotifications.checked = user.preferences.emailNotifications;
+            if (whatsappNotifications) whatsappNotifications.checked = user.preferences.whatsappNotifications;
+            if (languagePreference) languagePreference.value = user.preferences.language;
+            if (themePreference) themePreference.value = user.preferences.theme;
+        }
+    }
+}
+
+function initializeAvatarUpload() {
+    const avatarUpload = document.getElementById('avatarUpload');
+    if (avatarUpload) {
+        avatarUpload.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        showNotification('File terlalu besar. Maksimal 2MB.', 'error');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const profileAvatar = document.getElementById('profileAvatar');
+                        if (profileAvatar) {
+                            profileAvatar.style.backgroundImage = `url(${e.target.result})`;
+                            profileAvatar.innerHTML = '';
+
+                            // Save to user data
+                            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                                sessionStorage.getItem('altherawork_session'));
+                            if (session) {
+                                const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                                const userIndex = users.findIndex(u => u.id === session.userId);
+                                if (userIndex !== -1) {
+                                    users[userIndex].avatar = e.target.result;
+                                    localStorage.setItem('altherawork_users', JSON.stringify(users));
+                                    
+                                    // Update header avatar
+                                    const headerAvatar = document.getElementById('headerAvatar');
+                                    if (headerAvatar) {
+                                        headerAvatar.style.backgroundImage = `url(${e.target.result})`;
+                                        headerAvatar.innerHTML = '';
+                                    }
+                                }
+                            }
+
+                            showNotification('Foto profil berhasil diubah!', 'success');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showNotification('Harap pilih file gambar (JPG/PNG).', 'error');
+                }
+            }
+        });
+    }
+}
+
+function showProfileSection(section) {
+    // Hide all sections
+    document.querySelectorAll('.profile-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Remove active class from all menu items
+    document.querySelectorAll('.profile-menu-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Show selected section
+    const sectionElement = document.getElementById(section + '-section');
+    if (sectionElement) {
+        sectionElement.classList.add('active');
+    }
+    
+    // Add active class to clicked menu item
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+}
+
+function showChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
+
+function closeChangePasswordModal() {
+    const modal = document.getElementById('changePasswordModal');
+    if (modal) {
+        modal.classList.remove('active');
+        const form = document.getElementById('changePasswordForm');
+        if (form) form.reset();
+    }
+}
+
+function changePassword() {
+    const currentPassword = document.getElementById('currentPassword');
+    const newPassword = document.getElementById('newPassword');
+    const confirmNewPassword = document.getElementById('confirmNewPassword');
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+        showNotification('Harap lengkapi semua field.', 'error');
+        return;
+    }
+
+    if (newPassword.value.length < 6) {
+        showNotification('Password baru minimal 6 karakter.', 'error');
+        return;
+    }
+
+    if (newPassword.value !== confirmNewPassword.value) {
+        showNotification('Konfirmasi password tidak cocok.', 'error');
+        return;
+    }
+
+    const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+        sessionStorage.getItem('altherawork_session'));
+
+    if (session) {
+        const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+        const userIndex = users.findIndex(u => u.id === session.userId);
+        
+        if (userIndex !== -1) {
+            // Check current password
+            if (users[userIndex].password !== currentPassword.value) {
+                showNotification('Password saat ini salah.', 'error');
+                return;
+            }
+
+            // Update password
+            users[userIndex].password = newPassword.value;
+            localStorage.setItem('altherawork_users', JSON.stringify(users));
+
+            // Send email confirmation if checked
+            const sendEmail = document.getElementById('sendEmailConfirmation');
+            if (sendEmail && sendEmail.checked) {
+                // Simulate email sending
+                setTimeout(() => {
+                    showNotification('Konfirmasi perubahan password telah dikirim ke email Anda.', 'success');
+                }, 1000);
+            }
+
+            showNotification('Password berhasil diubah!', 'success');
+            closeChangePasswordModal();
+        }
+    }
+}
+
+function savePreferences() {
+    const emailNotifications = document.getElementById('emailNotifications');
+    const whatsappNotifications = document.getElementById('whatsappNotifications');
+    const languagePreference = document.getElementById('languagePreference');
+    const themePreference = document.getElementById('themePreference');
+
+    const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+        sessionStorage.getItem('altherawork_session'));
+
+    if (session) {
+        const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+        const userIndex = users.findIndex(u => u.id === session.userId);
+        
+        if (userIndex !== -1) {
+            users[userIndex].preferences = {
+                emailNotifications: emailNotifications ? emailNotifications.checked : true,
+                whatsappNotifications: whatsappNotifications ? whatsappNotifications.checked : true,
+                language: languagePreference ? languagePreference.value : 'id',
+                theme: themePreference ? themePreference.value : 'light'
+            };
+            localStorage.setItem('altherawork_users', JSON.stringify(users));
+            
+            showNotification('Pengaturan berhasil disimpan!', 'success');
+        }
+    }
+}
+
+// Orders Management Functions
+let currentFilter = 'all';
+let currentPage = 1;
+const ordersPerPage = 5;
+
+function loadUserOrders(userId) {
+    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+    const userOrders = orders.filter(order => order.userId === userId);
+    
+    // Update stats
+    updateOrderStats(userOrders);
+    
+    // Display orders
+    displayOrders(userOrders);
+}
+
+function updateOrderStats(orders) {
+    const pendingCount = document.getElementById('pendingCount');
+    const processingCount = document.getElementById('processingCount');
+    const completedCount = document.getElementById('completedCount');
+    const totalCount = document.getElementById('totalCount');
+
+    if (pendingCount && processingCount && completedCount && totalCount) {
+        pendingCount.textContent = orders.filter(o => o.status === 'pending').length;
+        processingCount.textContent = orders.filter(o => o.status === 'processing').length;
+        completedCount.textContent = orders.filter(o => o.status === 'completed').length;
+        totalCount.textContent = orders.length;
+    }
+}
+
+function displayOrders(orders, filteredOrders = null) {
+    const ordersToDisplay = filteredOrders || orders;
+    const ordersList = document.getElementById('ordersList');
+    const pagination = document.getElementById('ordersPagination');
+
+    if (!ordersList) return;
+
+    if (ordersToDisplay.length === 0) {
+        ordersList.innerHTML = `
+            <div class="no-orders">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Belum Ada Pesanan</h3>
+                <p>Anda belum memiliki pesanan. Mulai pesan layanan kami sekarang!</p>
+                <a href="booking.html" class="btn btn-primary">Pesan Layanan</a>
+            </div>
+        `;
+        if (pagination) pagination.innerHTML = '';
+        return;
+    }
+
+    // Apply filter
+    let filtered = ordersToDisplay;
+    if (currentFilter !== 'all') {
+        filtered = ordersToDisplay.filter(order => order.status === currentFilter);
+    }
+
+    // Apply pagination
+    const totalPages = Math.ceil(filtered.length / ordersPerPage);
+    const startIndex = (currentPage - 1) * ordersPerPage;
+    const paginatedOrders = filtered.slice(startIndex, startIndex + ordersPerPage);
+
+    let ordersHTML = '';
+    paginatedOrders.forEach(order => {
+        let statusClass = '';
+        let statusText = '';
+        let statusIcon = '';
+
+        switch (order.status) {
+            case 'pending':
+                statusClass = 'status-pending';
+                statusText = 'Menunggu Konfirmasi';
+                statusIcon = 'fas fa-clock';
+                break;
+            case 'processing':
+                statusClass = 'status-processing';
+                statusText = 'Dalam Proses';
+                statusIcon = 'fas fa-tools';
+                break;
+            case 'completed':
+                statusClass = 'status-completed';
+                statusText = 'Selesai';
+                statusIcon = 'fas fa-check-circle';
+                break;
+        }
+
+        ordersHTML += `
+            <div class="order-card" data-order-id="${order.id}">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h4>${order.service}</h4>
+                        <p>Order ID: ${order.id}</p>
+                    </div>
+                    <div class="order-status ${statusClass}">
+                        <i class="${statusIcon}"></i>
+                        ${statusText}
+                    </div>
+                </div>
+                <div class="order-details">
+                    <div class="order-detail">
+                        <span class="detail-label">Tanggal:</span>
+                        <span class="detail-value">${order.date}</span>
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Durasi:</span>
+                        <span class="detail-value">${order.duration} hari</span>
+                    </div>
+                    <div class="order-detail">
+                        <span class="detail-label">Total:</span>
+                        <span class="detail-value price">${order.total}</span>
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button class="btn btn-outline" onclick="viewOrderDetail('${order.id}')">
+                        <i class="fas fa-eye"></i> Lihat Detail
+                    </button>
+                    ${order.status === 'pending' ? `
+                        <button class="btn btn-secondary" onclick="cancelOrder('${order.id}')">
+                            <i class="fas fa-times"></i> Batalkan
+                        </button>
+                    ` : ''}
+                    ${order.status === 'completed' ? `
+                        <button class="btn btn-primary" onclick="reorder('${order.id}')">
+                            <i class="fas fa-redo"></i> Pesan Lagi
+                        </button>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    ordersList.innerHTML = ordersHTML;
+
+    // Generate pagination
+    if (pagination && totalPages > 1) {
+        let paginationHTML = '';
+        
+        if (currentPage > 1) {
+            paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage - 1})">
+                <i class="fas fa-chevron-left"></i> Sebelumnya
+            </button>`;
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+        }
+
+        if (currentPage < totalPages) {
+            paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage + 1})">
+                Selanjutnya <i class="fas fa-chevron-right"></i>
+            </button>`;
+        }
+
+        pagination.innerHTML = paginationHTML;
+    } else if (pagination) {
+        pagination.innerHTML = '';
+    }
+}
+
+function initializeFilters() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            currentFilter = this.getAttribute('data-filter');
+            currentPage = 1;
+            
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                loadUserOrders(session.userId);
+            }
+        });
+    });
+}
+
+function initializeSearch() {
+    const searchInput = document.getElementById('orderSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+                const userOrders = orders.filter(order => order.userId === session.userId);
+                
+                const filteredOrders = userOrders.filter(order => 
+                    order.service.toLowerCase().includes(searchTerm) ||
+                    order.id.toLowerCase().includes(searchTerm)
+                );
+                
+                displayOrders(userOrders, filteredOrders);
+            }
+        });
+    }
+}
+
+function changePage(page) {
+    currentPage = page;
+    const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+        sessionStorage.getItem('altherawork_session'));
+    if (session) {
+        loadUserOrders(session.userId);
+    }
+}
+
+function viewOrderDetail(orderId) {
+    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+    const order = orders.find(o => o.id === orderId);
+    
+    if (order) {
+        let statusClass = '';
+        let statusText = '';
+        let statusIcon = '';
+
+        switch (order.status) {
+            case 'pending':
+                statusClass = 'status-pending';
+                statusText = 'Menunggu Konfirmasi';
+                statusIcon = 'fas fa-clock';
+                break;
+            case 'processing':
+                statusClass = 'status-processing';
+                statusText = 'Dalam Proses';
+                statusIcon = 'fas fa-tools';
+                break;
+            case 'completed':
+                statusClass = 'status-completed';
+                statusText = 'Selesai';
+                statusIcon = 'fas fa-check-circle';
+                break;
+        }
+
+        const detailHTML = `
+            <div class="order-detail-view">
+                <div class="detail-section">
+                    <h4>Informasi Pesanan</h4>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Order ID:</span>
+                            <span class="detail-value">${order.id}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Layanan:</span>
+                            <span class="detail-value">${order.service}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tanggal:</span>
+                            <span class="detail-value">${order.date}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Durasi:</span>
+                            <span class="detail-value">${order.duration} hari</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value ${statusClass}">
+                                <i class="${statusIcon}"></i> ${statusText}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h4>Detail Pembayaran</h4>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">Total Biaya:</span>
+                            <span class="detail-value price">${order.total}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Metode Pembayaran:</span>
+                            <span class="detail-value">Transfer Bank</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status Pembayaran:</span>
+                            <span class="detail-value status-completed">
+                                <i class="fas fa-check-circle"></i> Lunas
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                ${order.worker ? `
+                <div class="detail-section">
+                    <h4>Tenaga Kerja</h4>
+                    <div class="worker-info">
+                        <div class="worker-avatar">
+                            ${order.worker.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="worker-details">
+                            <h5>${order.worker.name}</h5>
+                            <p>${order.worker.specialization}</p>
+                            <div class="worker-rating">
+                                <i class="fas fa-star"></i>
+                                <span>${order.worker.rating}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="detail-section">
+                    <h4>Timeline Pesanan</h4>
+                    <div class="timeline">
+                        <div class="timeline-item ${order.status === 'pending' || order.status === 'processing' || order.status === 'completed' ? 'active' : ''}">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Pesanan Dibuat</h5>
+                                <p>${order.date}</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item ${order.status === 'processing' || order.status === 'completed' ? 'active' : ''}">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Pesanan Dikonfirmasi</h5>
+                                <p>${order.confirmedDate || 'Menunggu konfirmasi'}</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item ${order.status === 'completed' ? 'active' : ''}">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Pekerjaan Selesai</h5>
+                                <p>${order.completedDate || 'Dalam proses'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const orderDetailContent = document.getElementById('orderDetailContent');
+        if (orderDetailContent) {
+            orderDetailContent.innerHTML = detailHTML;
+        }
+        
+        const modal = document.getElementById('orderDetailModal');
+        if (modal) {
+            modal.classList.add('active');
+        }
+        
+        // Set WhatsApp support button
+        const whatsappSupportBtn = document.getElementById('whatsappSupportBtn');
+        if (whatsappSupportBtn) {
+            whatsappSupportBtn.onclick = function() {
+                const message = `Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id}`;
+                const whatsappUrl = `https://wa.me/6281235825391?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            };
+        }
+    }
+}
+
+function closeOrderDetailModal() {
+    const modal = document.getElementById('orderDetailModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function cancelOrder(orderId) {
+    if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+        const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+        const orderIndex = orders.findIndex(o => o.id === orderId);
+        
+        if (orderIndex !== -1) {
+            orders.splice(orderIndex, 1);
+            localStorage.setItem('altherawork_orders', JSON.stringify(orders));
+            
+            showNotification('Pesanan berhasil dibatalkan!', 'success');
+            
+            // Reload orders
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                loadUserOrders(session.userId);
+            }
+        }
+    }
+}
+
+function reorder(orderId) {
+    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+    const order = orders.find(o => o.id === orderId);
+    
+    if (order) {
+        // Redirect to booking page with service pre-selected
+        const serviceMap = {
+            'Pekerjaan Rumah Tangga': 'rumah-tangga',
+            'Pindahan & Pengangkutan': 'pindahan',
+            'Konstruksi Ringan': 'konstruksi',
+            'Bongkar Pasang': 'bongkar-pasang',
+            'Landscaping': 'landscaping',
+            'Layanan Khusus': 'khusus'
+        };
+        
+        const serviceKey = Object.keys(serviceMap).find(key => order.service.includes(key));
+        if (serviceKey) {
+            window.location.href = `booking.html?service=${serviceMap[serviceKey]}`;
+        } else {
+            window.location.href = 'booking.html';
+        }
+    }
+}
+
+// Initialize profile and orders when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're on profile page
+    if (document.getElementById('personalInfoForm')) {
+        const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+            sessionStorage.getItem('altherawork_session'));
+
+        if (session) {
+            loadUserProfile(session.userId);
+            initializeAvatarUpload();
+            
+            // Add form submission handler
+            document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                    sessionStorage.getItem('altherawork_session'));
+
+                if (session) {
+                    const users = JSON.parse(localStorage.getItem('altherawork_users')) || [];
+                    const userIndex = users.findIndex(u => u.id === session.userId);
+                    
+                    if (userIndex !== -1) {
+                        users[userIndex].name = document.getElementById('fullName').value;
+                        users[userIndex].phone = document.getElementById('phoneNumber').value;
+                        users[userIndex].address = document.getElementById('address').value;
+                        users[userIndex].identityType = document.getElementById('identityType').value;
+                        users[userIndex].identityNumber = document.getElementById('identityNumber').value;
+                        
+                        localStorage.setItem('altherawork_users', JSON.stringify(users));
+                        
+                        // Update displayed name
+                        document.getElementById('profileName').textContent = users[userIndex].name;
+                        const headerAvatar = document.getElementById('headerAvatar');
+                        if (headerAvatar && !users[userIndex].avatar) {
+                            headerAvatar.textContent = users[userIndex].name.charAt(0).toUpperCase();
+                        }
+                        const avatarText = document.getElementById('avatarText');
+                        if (avatarText) {
+                            avatarText.textContent = users[userIndex].name.charAt(0).toUpperCase();
+                        }
+                        
+                        showNotification('Profil berhasil diperbarui!', 'success');
+                    }
+                }
+            });
+        }
+    }
+    
+    // Check if we're on orders page
+    if (document.getElementById('ordersList')) {
+        const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+            sessionStorage.getItem('altherawork_session'));
+
+        if (session) {
+            loadUserOrders(session.userId);
+            initializeFilters();
+            initializeSearch();
+        }
+    }
+});
 });
