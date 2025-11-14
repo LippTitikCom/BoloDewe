@@ -3071,7 +3071,6 @@ input:checked + .slider:before {
     gap: 15px;
     margin-bottom: 2rem;
     font-size: 2rem;
-    animation: bounce 2s infinite;
 }
 
 .loading-spinner {
@@ -3087,7 +3086,12 @@ input:checked + .slider:before {
 .loading-content p {
     font-size: 1.1rem;
     opacity: 0.9;
-    animation: pulse 2s infinite;
+}
+
+/* Pastikan animasi ada */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Animations for loading screen */
@@ -3113,5 +3117,6 @@ input:checked + .slider:before {
     50% { opacity: 1; }
     100% { opacity: 0.6; }
 }
+
 
 
