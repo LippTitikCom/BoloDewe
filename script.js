@@ -29,46 +29,63 @@ function initializeAllComponents() {
     checkAndUpdateAvatar();
 }
 
-// Loading Screen - FIXED VERSION
+// Loading Screen - GUARANTEED VERSION
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
     if (!loadingScreen) return;
 
-    console.log('Loading screen initialized');
+    console.log('🚀 Loading screen removal started');
 
-    // Function to remove loading screen
-    const removeLoadingScreen = () => {
-        console.log('Removing loading screen');
+    // Function to aggressively remove loading screen
+    const forceRemoveLoading = () => {
+        console.log('🗑️ Force removing loading screen');
+        
+        // Method 1: Add hidden class
         loadingScreen.classList.add('hidden');
         
+        // Method 2: Direct style changes
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
+        loadingScreen.style.pointerEvents = 'none';
+        
+        // Method 3: Remove from DOM after delay
         setTimeout(() => {
-            if (loadingScreen.parentNode) {
+            if (loadingScreen && loadingScreen.parentNode) {
                 loadingScreen.parentNode.removeChild(loadingScreen);
-                console.log('Loading screen removed from DOM');
+                console.log('✅ Loading screen completely removed from DOM');
             }
         }, 800);
     };
 
-    // Method 1: Wait for DOM content to be loaded
+    // STRATEGY 1: Remove after very short time (primary)
+    setTimeout(forceRemoveLoading, 800);
+
+    // STRATEGY 2: Remove when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM Content Loaded');
-            setTimeout(removeLoadingScreen, 1000);
+            console.log('📄 DOM Content Loaded - removing loading screen');
+            setTimeout(forceRemoveLoading, 300);
         });
     } else {
         // DOM already loaded
-        console.log('DOM already loaded');
-        setTimeout(removeLoadingScreen, 1000);
+        console.log('📄 DOM already loaded - removing loading screen');
+        setTimeout(forceRemoveLoading, 300);
     }
 
-    // Method 2: Fallback - remove after max time regardless
-    setTimeout(removeLoadingScreen, 4000);
-
-    // Method 3: Check if page resources are loaded
+    // STRATEGY 3: Remove when window loads
     window.addEventListener('load', () => {
-        console.log('Window loaded');
-        setTimeout(removeLoadingScreen, 500);
+        console.log('🌅 Window loaded - removing loading screen');
+        setTimeout(forceRemoveLoading, 200);
     });
+
+    // STRATEGY 4: Ultimate fallback - remove no matter what
+    setTimeout(forceRemoveLoading, 3000);
+    
+    // STRATEGY 5: Emergency removal on any click or keypress
+    document.addEventListener('click', forceRemoveLoading);
+    document.addEventListener('keydown', forceRemoveLoading);
+    
+    console.log('🎯 All loading screen removal strategies activated');
 }
 
 // Navigation
@@ -1846,3 +1863,4 @@ function reorder(orderId) {
         }
     }
 }
+
