@@ -29,47 +29,36 @@ function initializeAllComponents() {
     checkAndUpdateAvatar();
 }
 
-// Loading Screen - FIXED VERSION
+// Loading Screen - RELIABLE VERSION
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
+    
     if (loadingScreen) {
-        // Check if page is already loaded
-        if (document.readyState === 'complete') {
-            removeLoadingScreen(loadingScreen);
-            return;
-        }
-
-        // Remove loading screen when page is fully loaded
-        window.addEventListener('load', function() {
-            removeLoadingScreen(loadingScreen);
-        });
-
-        // Fallback: remove loading screen after max time
-        const fallbackTimer = setTimeout(function() {
-            if (loadingScreen && loadingScreen.parentNode) {
-                removeLoadingScreen(loadingScreen);
-            }
-        }, 3000); // Max 3 seconds
-
-        // Also listen for DOMContentLoaded as backup
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                removeLoadingScreen(loadingScreen);
-                clearTimeout(fallbackTimer);
-            }, 1000);
-        });
-    }
-}
-
-// Helper function to remove loading screen
-function removeLoadingScreen(loadingScreen) {
-    if (loadingScreen && loadingScreen.parentNode) {
-        loadingScreen.classList.add('hidden');
-        setTimeout(function() {
+        // Always remove after 2 seconds max, regardless of load status
+        const removeTimer = setTimeout(() => {
             if (loadingScreen.parentNode) {
-                loadingScreen.parentNode.removeChild(loadingScreen);
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    if (loadingScreen.parentNode) {
+                        loadingScreen.parentNode.removeChild(loadingScreen);
+                    }
+                }, 600);
             }
-        }, 800);
+            clearTimeout(removeTimer);
+        }, 2000);
+
+        // Also try to remove when page loads
+        window.addEventListener('load', () => {
+            clearTimeout(removeTimer);
+            if (loadingScreen.parentNode) {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    if (loadingScreen.parentNode) {
+                        loadingScreen.parentNode.removeChild(loadingScreen);
+                    }
+                }, 600);
+            }
+        });
     }
 }
 
@@ -1771,5 +1760,6 @@ function viewOrderDetail(orderId) {
             whatsappSupportBtn.onclick = function() {
                 const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
                 const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
+
 
 
