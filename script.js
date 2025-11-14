@@ -29,34 +29,50 @@ function initializeAllComponents() {
     checkAndUpdateAvatar();
 }
 
-// Loading Screen - FIXED
+// Loading Screen - FIXED VERSION
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
-    if (loadingScreen) {
-        // Remove loading screen after page fully loads
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                loadingScreen.classList.add('hidden');
-                setTimeout(function() {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 800);
-            }, 1500); // Reduced from 2000 to 1500
-        });
+    if (!loadingScreen) return;
 
-        // Fallback: remove loading screen after 5 seconds max
-        setTimeout(function() {
-            if (loadingScreen && loadingScreen.parentNode) {
-                loadingScreen.classList.add('hidden');
-                setTimeout(function() {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 800);
-            }
-        }, 5000);
+    let loadingRemoved = false;
+
+    function removeLoadingScreen() {
+        if (loadingRemoved) return;
+        loadingRemoved = true;
+        
+        // Fade out effect
+        loadingScreen.classList.add('fade-out');
+        
+        // Remove from DOM after fade out
+        setTimeout(() => {
+            loadingScreen.classList.add('removed');
+            setTimeout(() => {
+                if (loadingScreen.parentNode) {
+                    loadingScreen.parentNode.removeChild(loadingScreen);
+                }
+            }, 100);
+        }, 800);
     }
+
+    // Method 1: Wait for everything to load
+    window.addEventListener('load', function() {
+        setTimeout(removeLoadingScreen, 1000);
+    });
+
+    // Method 2: Fallback - remove after max time
+    setTimeout(removeLoadingScreen, 4000);
+
+    // Method 3: Check if page is already loaded
+    if (document.readyState === 'complete') {
+        setTimeout(removeLoadingScreen, 500);
+    }
+
+    // Method 4: Listen for readystatechange
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            setTimeout(removeLoadingScreen, 500);
+        }
+    });
 }
 
 // Navigation
@@ -1777,3 +1793,4 @@ function viewOrderDetail(orderId) {
             whatsappSupportBtn.onclick = function() {
                 const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
                 const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
+
