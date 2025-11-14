@@ -29,22 +29,46 @@ function initializeAllComponents() {
     checkAndUpdateAvatar();
 }
 
-// Loading Screen - SIMPLE VERSION
+// Loading Screen - FIXED VERSION
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
-    if (loadingScreen) {
-        // Remove after short delay regardless of load status
-        setTimeout(function() {
-            if (loadingScreen && loadingScreen.parentNode) {
-                loadingScreen.classList.add('hidden');
-                setTimeout(function() {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 800);
+    if (!loadingScreen) return;
+
+    console.log('Loading screen initialized');
+
+    // Function to remove loading screen
+    const removeLoadingScreen = () => {
+        console.log('Removing loading screen');
+        loadingScreen.classList.add('hidden');
+        
+        setTimeout(() => {
+            if (loadingScreen.parentNode) {
+                loadingScreen.parentNode.removeChild(loadingScreen);
+                console.log('Loading screen removed from DOM');
             }
-        }, 1500); // Remove after 1.5 seconds
+        }, 800);
+    };
+
+    // Method 1: Wait for DOM content to be loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded');
+            setTimeout(removeLoadingScreen, 1000);
+        });
+    } else {
+        // DOM already loaded
+        console.log('DOM already loaded');
+        setTimeout(removeLoadingScreen, 1000);
     }
+
+    // Method 2: Fallback - remove after max time regardless
+    setTimeout(removeLoadingScreen, 4000);
+
+    // Method 3: Check if page resources are loaded
+    window.addEventListener('load', () => {
+        console.log('Window loaded');
+        setTimeout(removeLoadingScreen, 500);
+    });
 }
 
     // Header scroll effect
@@ -1745,6 +1769,7 @@ function viewOrderDetail(orderId) {
             whatsappSupportBtn.onclick = function() {
                 const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
                 const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
+
 
 
 
