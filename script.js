@@ -29,36 +29,21 @@ function initializeAllComponents() {
     checkAndUpdateAvatar();
 }
 
-// Loading Screen - RELIABLE VERSION
+// Loading Screen - SIMPLE VERSION
 function initializeLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
-    
     if (loadingScreen) {
-        // Always remove after 2 seconds max, regardless of load status
-        const removeTimer = setTimeout(() => {
-            if (loadingScreen.parentNode) {
+        // Remove after short delay regardless of load status
+        setTimeout(function() {
+            if (loadingScreen && loadingScreen.parentNode) {
                 loadingScreen.classList.add('hidden');
-                setTimeout(() => {
+                setTimeout(function() {
                     if (loadingScreen.parentNode) {
                         loadingScreen.parentNode.removeChild(loadingScreen);
                     }
-                }, 600);
+                }, 800);
             }
-            clearTimeout(removeTimer);
-        }, 2000);
-
-        // Also try to remove when page loads
-        window.addEventListener('load', () => {
-            clearTimeout(removeTimer);
-            if (loadingScreen.parentNode) {
-                loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 600);
-            }
-        });
+        }, 1500); // Remove after 1.5 seconds
     }
 }
 
@@ -1760,6 +1745,7 @@ function viewOrderDetail(orderId) {
             whatsappSupportBtn.onclick = function() {
                 const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
                 const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
+
 
 
 
