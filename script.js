@@ -1863,4 +1863,173 @@ function reorder(orderId) {
         }
     }
 }
+// Fungsi untuk handle form submission
+function handleBookingFormSubmit(e) {
+    e.preventDefault();
+    
+    // Validasi form
+    if (!validateBookingForm()) {
+        return;
+    }
+    
+    // Tampilkan modal konfirmasi
+    showWhatsAppModal();
+}
+
+// Validasi form
+function validateBookingForm() {
+    const requiredFields = [
+        'fullName', 'phone', 'identityType', 'identityNumber', 
+        'address', 'serviceType', 'workDate', 'workDuration', 'workAddress'
+    ];
+    
+    for (let field of requiredFields) {
+        const element = document.getElementById(field);
+        if (!element.value.trim()) {
+            showNotification('error', `Harap isi field ${element.previousElementSibling.textContent}`);
+            element.focus();
+            return false;
+        }
+    }
+    
+    if (!document.getElementById('agreeTerms').checked || 
+        !document.getElementById('agreeData').checked) {
+        showNotification('error', 'Harap setujui syarat dan ketentuan');
+        return false;
+    }
+    
+    return true;
+}
+
+// Show WhatsApp modal
+function showWhatsAppModal() {
+    const modal = document.getElementById('whatsappModal');
+    const orderDetails = document.getElementById('orderDetails');
+    
+    // Isi ringkasan pesanan
+    const summaryData = {
+        service: document.getElementById('summaryService').textContent,
+        duration: document.getElementById('summaryDuration').textContent,
+        date: document.getElementById('summaryDate').textContent,
+        time: document.getElementById('summaryTime').textContent,
+        total: document.getElementById('summaryTotal').textContent
+    };
+    
+    orderDetails.innerHTML = `
+        <p><strong>Layanan:</strong> ${summaryData.service}</p>
+        <p><strong>Durasi:</strong> ${summaryData.duration}</p>
+        <p><strong>Tanggal:</strong> ${summaryData.date}</p>
+        <p><strong>Waktu:</strong> ${summaryData.time}</p>
+        <p><strong>Total Biaya:</strong> ${summaryData.total}</p>
+    `;
+    
+    modal.style.display = 'block';
+}
+
+// Fungsi untuk kirim ke WhatsApp
+function sendToWhatsApp() {
+    const formData = new FormData(document.getElementById('bookingForm'));
+    
+    // Format pesan untuk WhatsApp
+    const message = `Halo AltheraWork, saya ingin memesan layanan dengan detail berikut:
+    
+📋 *DATA PEMESANAN*
+Nama: ${formData.get('fullName')}
+Telepon: ${formData.get('phone')}
+Email: ${formData.get('email') || '-'}
+Identitas: ${formData.get('identityType')} - ${formData.get('identityNumber')}
+
+🛠️ *DETAIL LAYANAN*  
+Layanan: ${formData.get('serviceType')}
+Tanggal: ${formData.get('workDate')}
+Durasi: ${formData.get('workDuration')} hari
+Waktu: ${formData.get('workTime')}
+Lokasi: ${formData.get('workAddress')}
+
+Permintaan Khusus: ${formData.get('specialRequest') || '-'}
+
+Total Biaya: ${document.getElementById('summaryTotal').textContent}
+
+Saya telah menyetujui syarat dan ketentuan yang berlaku.`;
+
+    // Encode message untuk URL
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappNumber = '6281235825391'; // Ganti dengan nomor WhatsApp bisnis
+    
+    // Redirect ke WhatsApp
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    
+    // Tutup modal
+    document.getElementById('whatsappModal').style.display = 'none';
+    
+    // Reset form (opsional)
+    // document.getElementById('bookingForm').reset();
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('bookingForm');
+    const confirmWhatsAppBtn = document.getElementById('confirmWhatsApp');
+    const cancelOrderBtn = document.getElementById('cancelOrder');
+    const whatsappModal = document.getElementById('whatsappModal');
+    
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', handleBookingFormSubmit);
+    }
+    
+    if (confirmWhatsAppBtn) {
+        confirmWhatsAppBtn.addEventListener('click', sendToWhatsApp);
+    }
+    
+    if (cancelOrderBtn) {
+        cancelOrderBtn.addEventListener('click', function() {
+            whatsappModal.style.display = 'none';
+        });
+    }
+    
+    // Close modal ketika klik di luar
+    window.addEventListener('click', function(e) {
+        if (e.target === whatsappModal) {
+            whatsappModal.style.display = 'none';
+        }
+    });
+});
+
+// Fungsi untuk update summary real-time
+function updateBookingSummary() {
+    const serviceType = document.getElementById('serviceType');
+    const workDuration = document.getElementById('workDuration');
+    const workDate = document.getElementById('workDate');
+    const workTime = document.getElementById('workTime');
+    
+    if (serviceType.value) {
+        const serviceText = serviceType.options[serviceType.selectedIndex].text;
+        const priceMatch = serviceText.match(/Rp (\d+(?:\.\d+)*)/);
+        const dailyPrice = priceMatch ? parseInt(priceMatch[1].replace(/\./g, '')) : 0;
+        const duration = parseInt(workDuration.value) || 0;
+        const totalCost = dailyPrice * duration;
+        
+        document.getElementById('summaryService').textContent = serviceText.split(' - ')[0];
+        document.getElementById('summaryDuration').textContent = `${duration} Hari`;
+        document.getElementById('summaryDate').textContent = workDate.value ? new Date(workDate.value).toLocaleDateString('id-ID') : '-';
+        document.getElementById('summaryTime').textContent = workTime.options[workTime.selectedIndex].text;
+        document.getElementById('summaryPrice').textContent = `Rp ${dailyPrice.toLocaleString('id-ID')}`;
+        document.getElementById('summaryTotal').textContent = `Rp ${totalCost.toLocaleString('id-ID')}`;
+    }
+}
+
+// Add event listeners untuk real-time update
+document.addEventListener('DOMContentLoaded', function() {
+    const formElements = ['serviceType', 'workDuration', 'workDate', 'workTime'];
+    
+    formElements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.addEventListener('change', updateBookingSummary);
+        }
+    });
+    
+    // Initial update
+    updateBookingSummary();
+});
 
