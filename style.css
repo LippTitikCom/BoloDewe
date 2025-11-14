@@ -203,7 +203,7 @@ header {
     margin-left: 1rem;
     padding: 10px 20px;
     font-size: 0.9rem;
-    border: none;
+    border: black;
     cursor: pointer;
 }
 
@@ -3117,6 +3117,7 @@ input:checked + .slider:before {
     50% { opacity: 1; }
     100% { opacity: 0.6; }
 }
+
 
 
 
