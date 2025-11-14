@@ -71,6 +71,26 @@ function initializeLoadingScreen() {
     });
 }
 
+// Navigation
+function initializeNavigation() {
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    }
+
     // Header scroll effect
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
@@ -237,8 +257,8 @@ function showServiceModal(service, price) {
 
 // Send Service Inquiry to WhatsApp
 function sendServiceInquiry(service, price) {
-    const message = Halo AltheraWork, saya tertarik dengan layanan ${service} dengan harga ${price}/hari. Bisa info lebih lanjut?;
-    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
+    const message = `Halo AltheraWork, saya tertarik dengan layanan ${service} dengan harga ${price}/hari. Bisa info lebih lanjut?`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
     showNotification('Membuka WhatsApp... Silakan lanjutkan percakapan dengan tim kami.', 'success');
@@ -296,7 +316,7 @@ ${message}
 
 Mohon info lebih lanjut dan penawaran harganya. Terima kasih.`;
 
-    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)};
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
     window.open(whatsappUrl, '_blank');
 
     showNotification('Form berhasil dikirim! Membuka WhatsApp...', 'success');
@@ -377,7 +397,7 @@ function updateBookingSummary() {
         }
     }
 
-    if (summaryDuration) summaryDuration.textContent = workDuration ? ${workDuration.value} Hari : '-';
+    if (summaryDuration) summaryDuration.textContent = workDuration ? `${workDuration.value} Hari` : '-';
     if (summaryDate) summaryDate.textContent = workDate ? formatDate(workDate.value) : '-';
 
     if (summaryTime && workTime) {
@@ -389,8 +409,8 @@ function updateBookingSummary() {
     const price = getServicePrice(serviceType ? serviceType.value : '');
     const total = price * parseInt(workDuration ? workDuration.value : 0);
 
-    if (summaryPrice) summaryPrice.textContent = price ? Rp ${price.toLocaleString('id-ID')} : '-';
-    if (summaryTotal) summaryTotal.textContent = total ? Rp ${total.toLocaleString('id-ID')} : 'Rp 0';
+    if (summaryPrice) summaryPrice.textContent = price ? `Rp ${price.toLocaleString('id-ID')}` : '-';
+    if (summaryTotal) summaryTotal.textContent = total ? `Rp ${total.toLocaleString('id-ID')}` : 'Rp 0';
 }
 
 // Get Service Price from selection
@@ -433,7 +453,7 @@ function validateBookingForm() {
         const field = document.getElementById(fieldName);
         if (!field || !field.value.trim()) {
             const label = field && field.labels && field.labels[0] ? field.labels[0].textContent : fieldName;
-            showNotification(Harap lengkapi field ${label}, 'error');
+            showNotification(`Harap lengkapi field ${label}`, 'error');
             if (field) field.focus();
             return false;
         }
@@ -577,7 +597,7 @@ function sendBookingToWhatsApp(formData, totalPrice) {
 📋 DATA PEMESANAN
 • Nama: ${formData.fullName}
 • Telepon: ${formData.phone}
-${formData.email ? • Email: ${formData.email}\n : ''}
+${formData.email ? `• Email: ${formData.email}\n` : ''}
 • Jenis Identitas: ${formData.identityType}
 • Nomor Identitas: ${formData.identityNumber}
 • Alamat: ${formData.address}
@@ -586,15 +606,15 @@ ${formData.email ? • Email: ${formData.email}\n : ''}
 • Layanan: ${formData.serviceType.split(' - ')[0]}
 • Tanggal: ${formatDate(formData.workDate)}
 • Durasi: ${formData.workDuration} Hari
-${formData.workTime ? • Waktu: ${formData.workTime}\n : ''}
+${formData.workTime ? `• Waktu: ${formData.workTime}\n` : ''}
 • Lokasi: ${formData.workAddress}
-${formData.specialRequest ? • Permintaan Khusus: ${formData.specialRequest}\n : ''}
+${formData.specialRequest ? `• Permintaan Khusus: ${formData.specialRequest}\n` : ''}
 💵 RINCIAN BIAYA
 • Total Biaya: Rp ${totalPrice.toLocaleString('id-ID')}
 
 Saya telah membaca dan menyetujui syarat dan ketentuan yang berlaku. Terima kasih.`;
 
-    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
     showNotification('Pesanan berhasil! Silakan lanjutkan konfirmasi via WhatsApp.', 'success');
@@ -721,7 +741,7 @@ function handleFileSelection(file) {
 
 // General WhatsApp Message
 function sendWhatsAppMessage(message) {
-    const whatsappUrl = https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)};
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 }
 
@@ -737,7 +757,7 @@ function showNotification(message, type) {
 
     // Create notification element
     const notification = document.createElement('div');
-    notification.className = notification notification-${type};
+    notification.className = `notification notification-${type}`;
     notification.innerHTML = `
         <div class="notification-content">
             <i class="fas ${getNotificationIcon(type)}"></i>
@@ -842,7 +862,7 @@ function initializeServiceSelection() {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const service = this.getAttribute('data-service');
-            window.location.href = booking.html?service=${service};
+            window.location.href = `booking.html?service=${service}`;
         });
     });
 }
@@ -890,7 +910,7 @@ function initializeLoginSystem() {
             loginForms.forEach(form => {
                 form.style.display = 'none';
             });
-            document.getElementById(${target}Form).style.display = 'block';
+            document.getElementById(`${target}Form`).style.display = 'block';
         });
     });
     
@@ -1138,7 +1158,7 @@ function updateAvatarInAllPages(avatarUrl) {
     // Update header avatars
     headerAvatars.forEach(avatar => {
         if (avatarUrl) {
-            avatar.style.backgroundImage = url(${avatarUrl});
+            avatar.style.backgroundImage = `url(${avatarUrl})`;
             avatar.innerHTML = '';
         } else {
             const session = JSON.parse(localStorage.getItem('altherawork_session') || 
@@ -1156,7 +1176,7 @@ function updateAvatarInAllPages(avatarUrl) {
     
     // Update profile avatar
     if (profileAvatar && avatarUrl) {
-        profileAvatar.style.backgroundImage = url(${avatarUrl});
+        profileAvatar.style.backgroundImage = `url(${avatarUrl})`;
         profileAvatar.innerHTML = '';
         const avatarText = document.getElementById('avatarText');
         if (avatarText) {
@@ -1561,7 +1581,7 @@ function displayOrders(orders, filteredOrders = null) {
         }
 
         for (let i = 1; i <= totalPages; i++) {
-            paginationHTML += <button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>;
+            paginationHTML += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
         }
 
         if (currentPage < totalPages) {
@@ -1767,10 +1787,62 @@ function viewOrderDetail(orderId) {
         const whatsappSupportBtn = document.getElementById('whatsappSupportBtn');
         if (whatsappSupportBtn) {
             whatsappSupportBtn.onclick = function() {
-                const message = Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id};
-                const whatsappUrl = https://wa.me/6281235825391?text=${encodeURIComponent(message)};
+                const message = `Halo AltheraWork, saya ingin bertanya tentang pesanan dengan ID: ${order.id}`;
+                const whatsappUrl = `https://wa.me/6281235825391?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            };
+        }
+    }
+}
 
+function closeOrderDetailModal() {
+    const modal = document.getElementById('orderDetailModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
 
+function cancelOrder(orderId) {
+    if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+        const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+        const orderIndex = orders.findIndex(o => o.id === orderId);
+        
+        if (orderIndex !== -1) {
+            orders.splice(orderIndex, 1);
+            localStorage.setItem('altherawork_orders', JSON.stringify(orders));
+            
+            showNotification('Pesanan berhasil dibatalkan!', 'success');
+            
+            // Reload orders
+            const session = JSON.parse(localStorage.getItem('altherawork_session') ||
+                sessionStorage.getItem('altherawork_session'));
+            if (session) {
+                loadUserOrders(session.userId);
+            }
+        }
+    }
+}
 
-
-
+function reorder(orderId) {
+    const orders = JSON.parse(localStorage.getItem('altherawork_orders')) || [];
+    const order = orders.find(o => o.id === orderId);
+    
+    if (order) {
+        // Redirect to booking page with service pre-selected
+        const serviceMap = {
+            'Pekerjaan Rumah Tangga': 'rumah-tangga',
+            'Pindahan & Pengangkutan': 'pindahan',
+            'Konstruksi Ringan': 'konstruksi',
+            'Bongkar Pasang': 'bongkar-pasang',
+            'Landscaping': 'landscaping',
+            'Layanan Khusus': 'khusus'
+        };
+        
+        const serviceKey = Object.keys(serviceMap).find(key => order.service.includes(key));
+        if (serviceKey) {
+            window.location.href = `booking.html?service=${serviceMap[serviceKey]}`;
+        } else {
+            window.location.href = 'booking.html';
+        }
+    }
+}
